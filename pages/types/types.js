@@ -40,7 +40,7 @@ console.log('onLoad')
   refresh: function () {
     var that = this
     wx.request({
-      url: 'http://localhost:8080/schoolservice/showLablesServlet',
+      url: 'https://maodong.yunzjin.com/schoolservice/showLablesServlet',
       success: function (res) {
         that.setData({
           typeitems: res.data

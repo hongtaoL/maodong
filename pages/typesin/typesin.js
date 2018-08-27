@@ -143,7 +143,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: 'http://localhost:8080/schoolservice/updateFavourCountServlet',
+      url: 'https://maodong.yunzjin.com/schoolservice/updateFavourCountServlet',
       data: {
         articleid: articleid,
         count: count,
@@ -196,7 +196,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: 'http://localhost:8080/schoolservice/removeArticleServlet',
+            url: 'https://maodong.yunzjin.com/schoolservice/removeArticleServlet',
             data: {
               articleid: event.currentTarget.dataset.deleteId
             },
@@ -239,7 +239,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'http://localhost:8080/schoolservice/showArticlePageByLableServlet',
+      url: 'https://maodong.yunzjin.com/schoolservice/showArticlePageByLableServlet',
       data: {
         currentId: 0,
         lableid:that.data.lableid,
@@ -280,7 +280,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'http://localhost:8080/schoolservice/showArticlePageServlet',
+      url: 'https://maodong.yunzjin.com/schoolservice/showArticlePageServlet',
       data: {
         currentId: that.data.currentId,
         lableid:that.data.lableid,
@@ -326,7 +326,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'http://localhost:8080/schoolservice/showArticlePageByLableOBHotServlet',
+      url: 'https://maodong.yunzjin.com/schoolservice/showArticlePageByLableOBHotServlet',
       data: {
         linesize: that.data.lineSize1,
         daysbefore: that.data.daysbefore,

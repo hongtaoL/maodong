@@ -72,7 +72,7 @@ Page({
     //获取用户信息，成功则发送连接请求
     if (wx.getStorageSync('openId')) {
       wx.request({
-        url: 'http://localhost:8080/schoolservice/addArticleServlet',
+        url: 'https://maodong.yunzjin.com/schoolservice/addArticleServlet',
         data: {
           anonymous: e.detail.value.anonymous,
           content: e.detail.value.content,
