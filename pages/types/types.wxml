@@ -1,0 +1,7 @@
+
+<!--types.wxml-->
+<view class="container">
+  <navigator wx:for="{{typeitems}}" wx:key="{{item.lablename}}" url="../typesin/typesin?typeid={{item.lableid}}&typename={{item.lablename}}&picurl={{item.picurl}}" open-type="navigate" hover-class="other-navigator-hover">
+    <image class="pic" src="{{item.picurl}}" />
+  </navigator>
+</view>

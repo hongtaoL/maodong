@@ -1,0 +1,3 @@
+<!--pages/banner/banner.wxml-->
+
+<image src="{{img}}" style="width:{{width}};height:{{height}};"></image>

@@ -1,0 +1,74 @@
+/**index.wxss**/
+.container {
+  height: 100%;
+  width: 750rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+  background-color: EFEFF4;
+} 
+.container .placehold .endtext{
+  margin-top: 100rpx;
+}
+.userinfo_top{
+  width: 100%;
+  height: 230rpx;
+  padding: 20rpx 0 0 0;
+  display: flex;
+  flex-direction:column;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+   margin-top: -100rpx;
+}
+
+.ctnt0 placehold{
+  height: 100%;
+  width: 600rpx;
+}
+
+.userinfo-avatar {
+  width: 181rpx;
+  height: 181rpx;
+  border-radius: 50%;
+  margin:20px;
+}
+
+.userinfo-nickname {
+  color: #000000;
+  font-size: 22px;
+}
+
+.top-tab{
+  width: 750rpx;
+  height: 100rpx;
+  color: #000000;
+  font-size: 28rpx;
+  line-height: 100rpx;
+  z-index: 9999;
+  display: flex;
+}
+
+.toptab.active{
+  color: #F5A623;
+  border-bottom: solid 3px #F5A623;
+}
+
+.flex-wrp{
+  display: flex;
+}
+.flex-tab{
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: stretch;
+}
+.flex-item{
+  flex-grow: 1;
+  text-align: center;
+}

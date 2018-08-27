@@ -1,0 +1,121 @@
+
+<!--pages/content/content.wxml-->
+
+<!--<text>pages/content/content.wxml</text>-->
+<scroll-view scroll-y="true" class="container index" bindscrolltoupper="upper" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+
+  <!--以下为文章详细内容-->
+  <block wx:for="{{content}}" wx:key="{{item.articleid}}" wx:for-item="item" wx:for-index="idxx">
+
+    <!--以下是单个内容格子-->
+    <view class="feed-item">
+      <view class="feed-source">
+        <a class="">
+
+          <!--以下是头像-->
+          <view class="avatar">
+           <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
+          </view>
+        </a> 
+      </view>
+
+      <!--以下是内容格子-->
+      <view class="feed-content">
+        <view class="feed-content-top">
+
+          <!--以下的名字-->
+          <view class="name">
+            <text>{{item.anonymous=='true'?'匿名用户':item.nickname}}</text>
+          </view>
+          <view class="types">{{item.lablename}}</view>
+        </view>
+        <view class="answer-body">
+         
+            <!--以下是内容-->
+            <text class="answer-txt" aid="{{answer_id}}">{{item.content}}</text>
+
+          <!--以下是按钮-->
+          <view class="content-bottom ">
+            <view class="time ">
+              <a>{{item.pubdate}} </a> 
+            </view>
+            <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+               
+            </view>
+            <view class="collection" >
+              <image src="{{collectionstatus=='true'?collectionImg[1]:collectionImg[0]}}" bindtap="AddCollectionsTap" data-articleid="{{item.articleid}}" data-updateid="{{idxx}}" data-updateitem="{{content}}"></image>
+              <a>收藏</a>
+            </view>
+            <view class="like">
+              <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{content}}" bindtap="AddLikeTap"></image>
+              <a> {{item.favour}} </a> 
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <!--以下为评论内容-->
+  <block wx:for="{{feed}}" wx:key="{{item.articleid}}" wx:for-item="item" wx:for-index="idxx" >
+
+    <!--以下是单个内容格子-->
+    <view class="feed-item1" bindtap="deleteComment" data-userid="{{item.userid}}" data-replyid="{{idxx}}">
+      <view class="feed-source">
+        <a class="">
+
+          <!--以下是头像-->
+          <view class="avatar">
+            <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
+          </view>
+        </a> 
+      </view>
+
+      <!--以下是内容格子-->
+      <view class="feed-content">
+        <view class="feed-content-top">
+
+          <!--以下的名字-->
+          <view class="name">
+            <text>{{item.anonymous=='true'?'匿名用户':item.nickname}}</text>
+          </view>
+          <view class="time">{{item.pubdate}}</view>
+        </view>
+        <view class="answer-body">
+            <!--以下是内容-->
+            <text class="answer-txt" aid="{{answer_id}}">{{item.content}}</text>
+          <!--以下是按钮-->
+         <!-- <view class="content-bottom ">
+            <view class="time ">
+              <a>{{item.pubdate}} </a> 
+            </view>
+            <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+              <a wx:if="{{item.userid==openId}}">删除</a> 
+            </view>
+            <view class="comments " bindtap="CommentsTap">
+              <image src="../../images/comments.png"></image>
+              <a> {{item.reply}} </a> 
+            </view>
+            <view class="like">
+              <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{feed}}" bindtap="AddLikeTap"></image>
+              <a> {{item.favour}} </a> 
+            </view>
+          </view>-->
+        </view>
+      </view>
+    </view>
+  </block>
+  <!--评论输入框-->
+ 
+</scroll-view>
+<view class="commentArea">
+  <form bindsubmit="formSubmit" report-submit="true">
+  <view class="firstLine">
+    <input name="input" auto-height="true" placeholder="评论" bindinput="textinput" cursor-spacing="50"/>
+    <button size="mini" form-type="submit" disabled="{{tabdisable}}">发送</button>
+  </view>
+  <view class="secondLine" hidden="{{commhidden}}">
+    <view class="niming" >匿名发布</view>
+    <switch name="switch" color="#F5A623"/>
+  </view>
+</form>
+  </view>

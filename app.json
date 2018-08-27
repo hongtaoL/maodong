@@ -1,0 +1,53 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/my/my",
+    "pages/twitter/twitter",
+    "pages/types/types",
+    "pages/typesin/typesin",
+    "pages/content/content",
+    "pages/subtwitter/subtwitter",
+    "pages/banner/banner"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#F5A623",
+    "navigationBarTitleText": "猫洞",
+    "navigationBarTextStyle":"white",
+    "backgroundColor": "#fff",
+    "enablePullDownRefresh":true
+  },
+  "tabBar": {
+    "color": "#7F8389", 
+    "selectedColor": "#F5A623", 
+    "borderStyle": "black", 
+    "iconSize":10,
+    "list": [
+      {
+      "pagePath": "pages/index/index",
+      "text": "首页",
+      "selectedColor": "#F5A623",
+      "iconPath": "images/indexicon2.png", 
+      "selectedIconPath": "images/indexicon1.png"
+    }, 
+    {
+      "pagePath": "pages/types/types",
+      "text": "话题",
+       "selectedColor": "#F5A623",
+        "iconPath": "images/typeicon2.png", 
+      "selectedIconPath": "images/typeicon1.png"
+    },
+    {
+      "pagePath": "pages/my/my",
+      "text": "我的",
+       "selectedColor": "#F5A623",
+        "iconPath": "images/myicon2.png", 
+      "selectedIconPath": "images/myicon1.png"
+    }]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

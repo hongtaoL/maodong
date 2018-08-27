@@ -1,0 +1,71 @@
+/* pages/typesin/typesin.wxss */
+
+.topcontainer{
+  height: 100%;
+  display: flex;
+}
+
+.container{
+  height: 1130rpx;
+}
+
+.top-tab1{
+  width: 600rpx;
+  height: 100rpx;
+  color: #000000;
+  font-size: 28rpx;
+  line-height: 100rpx;
+  z-index: 9999;
+  display: flex;
+}
+
+
+.top-tab2{
+  width: 150rpx;
+  height: 100rpx;
+  color: #000000;
+  line-height: 100rpx;
+  z-index: 9999;
+  display: flex;
+}
+.toptab.active{
+  color: #F5A623;
+  border-bottom: solid 3px #F5A623;
+}
+
+/*.flex-wrp{
+  display: flex;
+}*/
+.flex-tab{
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-items: stretch;
+}
+.flex-item{
+  flex-grow: 1;
+  text-align: center;
+}
+
+.fabu{
+  width:30rpx;
+  height:30rpx;
+  margin-left:50rpx;
+  margin-top:40rpx;
+}
+
+.activity{
+  width: 750rpx;
+  height: 375rpx;
+}
+.activity image{
+  width: 750rpx;
+  height: 375rpx;
+}
+.placehold{
+  font-size: 28rpx;
+  padding: 80rpx 0;
+}
+.pic{
+    width:750rpx;
+    height:220rpx;
+}

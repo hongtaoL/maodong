@@ -1,0 +1,184 @@
+
+<!--my.wxml-->
+<view class="container">
+  <view wx:if="{{!hasUserInfo && canIUse}}" class="userinfo_top">
+    <button  open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="getUserBtn"> 获取头像昵称 </button>
+  </view>
+  <view wx:else class="userinfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="top-tab flex-wrp flex-tab">
+    <view class="toptab flex-item {{currentNavtab==idx ? 'active' : ''}}" wx:for="{{navTab}}" wx:for-index="idx" wx:for-item="itemName" data-idx="{{idx}}" bindtap="switchTab">
+      {{itemName}}
+    </view>
+  </view>
+ <scroll-view scroll-y="true" bindscrolltoupper="upper"  scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+  <!--我的发言-->
+  <view class="placehold0" hidden="{{currentNavtab==0 ? '' : true}}">
+
+      <!--以下为我的发言内容-->
+      <block wx:for="{{PPA}}" wx:key="{{item.articleid}}" wx:for-item="item" wx:for-index="idxx">
+
+        <!--以下是单个内容格子-->
+        <view class="feed-item">
+          <view class="feed-source">
+            <a class="">
+
+              <!--以下是头像-->
+              <view class="avatar">
+                <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
+              </view>
+            </a> 
+          </view>
+
+          <!--以下是内容格子-->
+          <view class="feed-content">
+            <view class="feed-content-top">
+
+              <!--以下的名字-->
+              <view class="name">
+                <text>{{item.anonymous=='true'?'匿名用户':item.nickname}}</text>
+              </view>
+              <view class="types">{{item.lablename}}</view>
+            </view>
+            <view class="answer-body">
+              <view >
+
+                <!--以下是内容-->
+                <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
+              </view>
+
+              <!--以下是按钮-->
+              <view class="content-bottom ">
+                <view class="time ">
+                  <a>{{item.pubdate}} </a> 
+                </view>
+                <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+                  <a wx:if="{{item.userid==openId}}">删除</a> 
+                </view>
+                <view class="comments " data-articleid="{{item.articleid}}" bindtap="CommentsTap">
+                  <image src="../../images/comments.png"></image>
+                  <a> {{item.reply}} </a> 
+                </view>
+                <view class="like">
+                  <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{PPA}}" bindtap="AddLikeTap"></image>
+                  <a> {{item.favour}} </a> 
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+  </view>
+  <!--我的收藏-->
+  <view class="placehold1" hidden="{{currentNavtab==1 ? '' : true}}">
+      <!--以下为我的收藏内容-->
+      <block wx:for="{{MYC}}" wx:key="{{item.articleid}}" wx:for-item="item" wx:for-index="idxx">
+
+        <!--以下是单个内容格子-->
+        <view class="feed-item">
+          <view class="feed-source">
+            <a class="">
+
+              <!--以下是头像-->
+              <view class="avatar">
+                <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
+              </view>
+            </a> 
+          </view>
+
+          <!--以下是内容格子-->
+          <view class="feed-content">
+            <view class="feed-content-top">
+
+              <!--以下的名字-->
+              <view class="name">
+                <text>{{item.anonymous=='true'?'匿名用户':item.nickname}}</text>
+              </view>
+              <view class="types">{{item.lablename}}</view>
+            </view>
+            <view class="answer-body">
+          
+                <!--以下是内容-->
+                <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
+
+              <!--以下是按钮-->
+              <view class="content-bottom ">
+                <view class="time ">
+                  <a>{{item.pubdate}} </a> 
+                </view>
+                <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+                  <a wx:if="{{item.userid==openId}}">删除</a> 
+                </view>
+                <view class="comments " data-articleid="{{item.articleid}}" bindtap="CommentsTap">
+                  <image src="../../images/comments.png"></image>
+                  <a> {{item.reply}} </a> 
+                </view>
+                <view class="like">
+                  <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{MYC}}" bindtap="AddLikeTap"></image>
+                  <a> {{item.favour}} </a> 
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+  </view>
+
+  <!--精彩推荐-->
+  <view class="placehold3" hidden="{{currentNavtab==2 ? '' : true}}">
+      <!--以下为精彩推荐内容-->
+      <block wx:for="{{PRC}}" wx:key="{{item.articleid}}" wx:for-item="item" wx:for-index="idxx">
+
+        <!--以下是单个内容格子-->
+        <view class="feed-item">
+          <view class="feed-source">
+            <a class="">
+
+              <!--以下是头像-->
+              <view class="avatar">
+                <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
+              </view>
+            </a> 
+          </view>
+
+          <!--以下是内容格子-->
+          <view class="feed-content">
+            <view class="feed-content-top">
+
+              <!--以下的名字-->
+              <view class="name">
+                <text>{{item.anonymous=='true'?'匿名用户':item.nickname}}</text>
+              </view>
+              <view class="types">{{item.lablename}}</view>
+            </view>
+            <view class="answer-body">
+          
+                <!--以下是内容-->
+                <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
+
+              <!--以下是按钮-->
+              <view class="content-bottom ">
+                <view class="time ">
+                  <a>{{item.pubdate}} </a> 
+                </view>
+                <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+                  <a wx:if="{{item.userid==openId}}">删除</a> 
+                </view>
+                <view class="comments " data-articleid="{{item.articleid}}" bindtap="CommentsTap">
+                  <image src="../../images/comments.png"></image>
+                  <a> {{item.reply}} </a> 
+                </view>
+                <view class="like">
+                  <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{MYC}}" bindtap="AddLikeTap"></image>
+                  <a> {{item.favour}} </a> 
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+  </view>
+  </scroll-view>
+</view>

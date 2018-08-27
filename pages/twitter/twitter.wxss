@@ -1,0 +1,83 @@
+.container {
+  width: 750rpx;
+  height: 1000rpx;
+}
+
+.container .fabu {
+  width: 98%;
+  height: 350rpx;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15rpx;
+  background-color: white;
+  font-size: 18px;
+  border-radius: 2px;
+}
+.container .fabu textarea{
+ width: 740rpx;
+ height: 300rpx;
+
+}
+
+.container .niming {
+ margin-top: 20rpx;
+  width: 750rpx;
+  height: 90rpx;
+  border-top-color: gainsboro;
+  border-top-width: 0.5px;
+  border-top-style: solid;
+  border-bottom-color: gainsboro;
+  border-bottom-width: 0.5px;
+  border-bottom-style: solid;
+}
+
+.container .niming .wenzi {
+  width: 375rpx;
+  height: 90rpx;
+  float:left;
+}
+
+.container .niming .wenzi text {
+  position: relative;
+  left: 10px;
+  top: 20rpx;
+}
+
+.container .niming .switch {
+  width: 375rpx;
+  height: 90rpx;
+  float:left;
+}
+
+.container .niming .switchbutton {
+  position: relative;
+  margin-top: 10rpx;
+  float: right;
+}
+
+.container .type{
+  margin-top: 40rpx;
+  padding: 30rpx 30rpx 30rpx 30rpx;
+  width: 750rpx;
+  border-top: 0.5px solid gainsboro;
+  border-bottom: 0.5px solid gainsboro;
+}
+
+.container .type radio-group{
+  width:750rpx;
+  margin: auto;
+}
+
+.container .type .abc{
+  width:720rpx;
+}
+.container .type radio-group radio{
+  padding-right: 12rpx;
+  padding-bottom: 5rpx;
+}
+.container .subbutton {
+  position: relative;
+  top: 50px;
+  width: 750rpx;
+  height: 100rpx;
+}

@@ -1,0 +1,159 @@
+
+<!--index.wxml-->
+
+<!--选项卡&plusButton-->
+<view class="topcontainer " id="sss">
+  <view class="top-tab1 flex-wrp flex-tab">
+    <view class="toptab flex-item {{currentNavtab==idx ? 'active' : ''}}" wx:for="{{navTab}}" wx:for-index="idx" wx:for-item="itemName" data-idx="{{idx}}" bindtap="switchTab">
+      {{itemName}}
+    </view>
+  </view>
+
+  <!--以下为加号发布的内容-->
+  <view class="top-tab2" bindtap="plusTap">
+    <image class="fabu" src="../../images/fabu.png" />
+  </view>
+</view>
+
+<!--以上是top-tab和发布按钮&下面是滚动内容-->
+<scroll-view scroll-y="true" class="container index" bindscrolltoupper="upper" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+
+  <!--==================第一页==========
+  ===-->
+  <view class="ctnt0" hidden="{{currentNavtab==0 ? '' : true}}">
+
+    <!--banner-->
+    <swiper class="activity" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{imgUrls}}" wx:for-index="idd">
+        <swiper-item>
+          <image src="{{item.picurl}}" class="slide-image" width="355" height="155" bindtap="banner" data-index="{{idd}}"/>
+        </swiper-item>
+      </block>
+    </swiper>
+
+    <!--以下为按时间发布的内容-->
+    <block wx:for="{{feed}}" wx:key="{{item.articleid}}" wx:for-item="item" wx:for-index="idxx">
+
+      <!--以下是单个内容格子-->
+      <view class="feed-item">
+        <view class="feed-source">
+          <a class="">
+
+            <!--以下是头像-->
+            <view class="avatar">
+              <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
+            </view>
+          </a> 
+        </view>
+
+        <!--以下是内容格子-->
+        <view class="feed-content">
+          <view class="feed-content-top">
+
+            <!--以下的名字-->
+            <view class="name">
+              <text>{{item.anonymous=='true'?'匿名用户':item.nickname}}</text>
+            </view>
+            <view class="types">{{item.lablename}}</view>
+          </view>
+          <view class="answer-body">
+            <view bindtap="bindItemTap">
+
+              <!--以下是内容-->
+              <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
+            </view>
+
+            <!--以下是按钮-->
+            <view class="content-bottom ">
+              <view class="time ">
+                <a>{{item.pubdate}} </a> 
+              </view>
+              <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+                <a wx:if="{{item.userid==openId}}">删除</a>
+                <a wx:elif="{{openId==admin1}}">删除</a> 
+                <a wx:elif="{{openId==admin2}}">删除</a>  
+              </view>
+              <view class="comments " data-articleid="{{item.articleid}}" bindtap="CommentsTap">
+                <image src="../../images/comments.png"></image>
+                <a> {{item.reply}} </a> 
+              </view>
+              <view class="like">
+                <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{feed}}" bindtap="AddLikeTap"></image>
+                <a> {{item.favour}} </a> 
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!--==================第二页==========
+  ===-->
+  <view class="ctnt1" hidden="{{currentNavtab==1 ? '' : true}}">
+ <!--banner-->
+    <swiper class="activity" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block wx:for="{{imgUrls}}" wx:for-index="idd">
+        <swiper-item>
+          <image src="{{item.picurl}}" class="slide-image" width="355" height="155" bindtap="banner" data-index="{{idd}}"/>
+        </swiper-item>
+      </block>
+    </swiper>
+
+    <!--以下为按时间发布的内容-->
+    <block wx:for="{{feed1}}" wx:key="{{item.articleid}}" wx:for-item="item" wx:for-index="idxx">
+
+      <!--以下是单个内容格子-->
+      <view class="feed-item">
+        <view class="feed-source">
+          <a class="">
+
+            <!--以下是头像-->
+            <view class="avatar">
+              <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
+            </view>
+          </a> 
+        </view>
+
+        <!--以下是内容格子-->
+        <view class="feed-content">
+          <view class="feed-content-top">
+
+            <!--以下的名字-->
+            <view class="name">
+              <text>{{item.anonymous=='true'?'匿名用户':item.nickname}}</text>
+            </view>
+            <view class="types">{{item.lablename}}</view>
+          </view>
+          <view class="answer-body">
+            <view bindtap="bindItemTap">
+
+              <!--以下是内容-->
+              <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
+            </view>
+
+            <!--以下是按钮-->
+            <view class="content-bottom ">
+              <view class="time ">
+                <a>{{item.pubdate}} </a> 
+              </view>
+              <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+                <a wx:if="{{item.userid==openId}}">删除</a>
+                <a wx:elif="{{openId==admin1}}">删除</a> 
+                <a wx:elif="{{openId==admin2}}">删除</a> 
+              </view>
+              <view class="comments " data-articleid="{{item.articleid}}" bindtap="CommentsTap">
+                <image src="../../images/comments.png"></image>
+                <a> {{item.reply}} </a> 
+              </view>
+              <view class="like">
+                <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{feed1}}" bindtap="AddLikeTap"></image>
+                <a> {{item.favour}} </a> 
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</scroll-view>

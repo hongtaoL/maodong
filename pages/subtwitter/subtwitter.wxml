@@ -1,0 +1,36 @@
+
+<!--twitter.wxml-->
+<view class="container">
+  <form class="form" bindsubmit="formSubmit">
+
+    <!--文字发布-->
+    <view class="fabu">
+      <textarea name="content" placeholder="{{inputValue}}" maxlength="140" bindblur="textblur" />
+    </view>
+
+    <!--匿名发布-->
+    <view class="niming ">
+      <view class="wenzi">
+        <text>匿名发布</text>
+      </view>
+      <view class="switch">
+        <switch class="switchbutton" name="anonymous" color="#F5A623" />
+      </view>
+    </view>
+
+    <!--选择标签-->
+    <!-- <view class="type">
+        <radio-group bindchange="radioChange" name="lableid">
+          <view> 
+              <radio wx:for="{{items}}" value="{{item.value}}" color="#F5A623" >{{item.name}}</radio>
+          </view>
+        </radio-group>
+    </view>
+-->
+
+    <!--提交-->
+    <view class="subbutton">
+      <button size="default" type="{{types[1]}}" disabled="{{disabled}}" form-type="submit" bindtap="setLaoding" hover-class="button-hover"> 提交 </button>
+    </view>
+  </form>
+</view>
