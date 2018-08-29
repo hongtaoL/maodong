@@ -77,3 +77,15 @@
   width: 750rpx;
   height: 100rpx;
 }
+
+
+.container .subbutton .btn{
+  width:90%;
+  background-color: #f5a623;
+}
+
+.container .subbutton .btn[disabled]{
+  width:90%;
+  background-color: #ffcc7b;
+}
+

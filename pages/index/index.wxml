@@ -57,7 +57,7 @@
             <view class="types">{{item.lablename}}</view>
           </view>
           <view class="answer-body">
-            <view bindtap="bindItemTap">
+            <view  background-color="blueviolet" bindtap="bindItemTap">
 
               <!--以下是内容-->
               <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
@@ -78,7 +78,7 @@
                 <a> {{item.reply}} </a> 
               </view>
               <view class="like">
-                <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{feed}}" bindtap="AddLikeTap"></image>
+                <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{feed}}" bindtap="{{openId?'AddLikeTap':''}}"></image>
                 <a> {{item.favour}} </a> 
               </view>
             </view>
@@ -147,7 +147,7 @@
                 <a> {{item.reply}} </a> 
               </view>
               <view class="like">
-                <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{feed1}}" bindtap="AddLikeTap"></image>
+                <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{feed1}}" bindtap="{{openId?'AddLikeTap':''}}"></image>
                 <a> {{item.favour}} </a> 
               </view>
             </view>

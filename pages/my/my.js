@@ -1,6 +1,8 @@
 //my.js
 var util = require('../../utils/util.js')
 var error = util.getError();
+var data_index = require('../../data/data_index.js')
+var url = data_index.index;
 //获取应用实例
 const app = getApp()
 Page({
@@ -9,7 +11,8 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     code: null,
-    navTab: ["我的发言", "我的收藏","精彩推荐"],
+    // navTab: ["我的发言", "我的收藏","精彩推荐"],
+    navTab: ["我的发言", "我的收藏"],
     currentNavtab: "0",
     likeImg: [
       '../../images/like_empty.png',
@@ -68,7 +71,7 @@ Page({
     var that = this
     console.log("avatarUrl=" + that.data.userInfo.avatarUrl)
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/registerServlet',
+      url: url.urlstr+'schoolservice/registerServlet',
       data: {
         avatar: that.data.userInfo.avatarUrl,
         code: that.data.code,
@@ -83,9 +86,12 @@ Page({
           that.data.openId = res.data.userid
           console.log("openid=" + that.data.openId)
           wx.setStorageSync('openId', that.data.openId)
+          that.setData({
+            'openId': that.data.openId
+          })
         } else {//用户id为空，数据库插入操作失败
           wx.showModal({
-            title: '错误代码：' + error.errorcode[2].errorid,
+            title: '--提醒--',
             content: error.errorcode[2].errorname,
             success: function (res) {
               if (res.confirm) {
@@ -99,7 +105,7 @@ Page({
       fail: function (res) {
         //连接服务器失败，弹出提示信息
         wx.showModal({
-          title: '错误代码：' + error.errorcode[3].errorid,
+          title: '--提醒--',
           content: error.errorcode[3].errorname,
           success: function (res) {
             if (res.confirm) {
@@ -122,6 +128,9 @@ Page({
   },
   onShow: function () {
     var that = this
+    this.setData({
+      openId: wx.getStorageSync('openId')
+    });
     if (that.data.currentNavtab == '0') {
       that.getMyArticleList();
     } else if (that.data.currentNavtab == '1') {
@@ -150,7 +159,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showMyArticleServlet',
+      url: url.urlstr+'schoolservice/showMyArticleServlet',
       data: {
         userid: that.data.openId
       },
@@ -184,7 +193,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showCollectionArticleServlet',
+      url: url.urlstr+'schoolservice/showCollectionArticleServlet',
       data: {
         userid: that.data.openId
       },
@@ -218,7 +227,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showRecommendArticleServlet',
+      url: url.urlstr +'schoolservice/showRecommendArticleServlet',
       data: {
         userid: that.data.openId
       },
@@ -303,7 +312,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/updateFavourCountServlet',
+      url: url.urlstr +'schoolservice/updateFavourCountServlet',
       data: {
         articleid: articleid,
         count: count,
@@ -316,7 +325,7 @@ Page({
         if (res.data.error) {//判断数据库异常
           //数据库抛出异常，弹出提示信息
           wx.showModal({
-            title: '错误代码：' + error.errorcode[7].errorid,
+            title: '--提醒--',
             content: error.errorcode[7].errorname,
             showCancel: false,
             success: function (res) {
@@ -335,7 +344,7 @@ Page({
       fail: function (res) {
         console.log("updatelikecountfailed")
         wx.showModal({
-          title: '错误代码：' + error.errorcode[11].errorid,
+          title: '--提醒--',
           content: error.errorcode[11].errorname,
           showCancel: false,
           success: function (res) {
@@ -356,7 +365,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: 'https://maodong.yunzjin.com/schoolservice/removeArticleServlet',
+            url: url.urlstr +'schoolservice/removeArticleServlet',
             data: {
               articleid: event.currentTarget.dataset.deleteId
             },

@@ -1,3 +1,2 @@
 <!--pages/banner/banner.wxml-->
-
-<image src="{{img}}" style="width:{{width}};height:{{height}};"></image>
+<web-view src="{{url}}"></web-view>

@@ -2,16 +2,17 @@
 var app = getApp()
 var util = require('../../utils/util.js')
 var error = util.getError();
+var data_index = require('../../data/data_index.js')
+var url = data_index.index;
 Page({
   data: {
     focus: false,
-    inputValue: '',//textarea的值
+    inputValue: '写下此刻的想法...',//textarea的值
     types: ['default', 'primary', 'warn'],
     radioValue: '',//分类标签的值
     disabled: true,//提交按钮初始不可用
     loading: false,//提交动画
-    lableid: null,
-    userInfo: null
+    lableid: null
   },
   onLoad: function (e) {
     console.log('twitteronLoad')
@@ -25,7 +26,7 @@ Page({
       console.log('openId:' + app.globalData.openId)
       //失败，弹出提示信息
       wx.showModal({
-        title: '错误代码：' + error.errorcode[4].errorid,
+        title: '--提醒--',
         content: error.errorcode[4].errorname,
         confirmText: '授权',
         cancelText: '返回',
@@ -72,7 +73,7 @@ Page({
     //获取用户信息，成功则发送连接请求
     if (wx.getStorageSync('openId')) {
       wx.request({
-        url: 'https://maodong.yunzjin.com/schoolservice/addArticleServlet',
+        url: url.urlstr +'schoolservice/addArticleServlet',
         data: {
           anonymous: e.detail.value.anonymous,
           content: e.detail.value.content,
@@ -86,7 +87,7 @@ Page({
           if (res.data.error) {//判断数据库异常
             //数据库抛出异常，弹出提示信息
             wx.showModal({
-              title: '错误代码：' + error.errorcode[5].errorid,
+              title: '--提醒--',
               content: error.errorcode[5].errorname,
               showCancel: false,
               success: function (res) {
@@ -128,7 +129,7 @@ Page({
         fail: function (res) {
           //连接服务器失败，弹出提示信息
           wx.showModal({
-            title: '错误代码：' + error.errorcode[6].errorid,
+            title: '--提醒--',
             content: error.errorcode[6].errorname,
             cancelText: '返回',
             success: function (res) {

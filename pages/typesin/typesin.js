@@ -1,6 +1,8 @@
 // pages/typesin/typesin.js
 var util = require('../../utils/util.js')
 var error = util.getError();
+var data_index = require('../../data/data_index.js')
+var url = data_index.index;
 Page({
   data: {
     picurl: [],
@@ -45,7 +47,6 @@ Page({
     // 页面渲染完成
   },
   onShow: function () {
-    console.log('onLoad')
     var that = this
     //调用应用实例的方法获取全局数据
     this.refresh();
@@ -54,6 +55,9 @@ Page({
       icon: 'loading',
       duration: 300
     })
+    this.setData({
+      openId: wx.getStorageSync('openId')
+    });
   },
   onHide: function () {
     // 页面隐藏
@@ -70,7 +74,7 @@ Page({
       })
     } else {
       wx.showModal({
-        title: '错误代码：' + error.errorcode[4].errorid,
+        title: '--提醒--',
         content: error.errorcode[4].errorname,
         showCancel: false,
         success: function (res) {
@@ -143,7 +147,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/updateFavourCountServlet',
+      url: url.urlstr +'schoolservice/updateFavourCountServlet',
       data: {
         articleid: articleid,
         count: count,
@@ -156,7 +160,7 @@ Page({
         if (res.data.error) {//判断数据库异常
           //数据库抛出异常，弹出提示信息
           wx.showModal({
-            title: '错误代码：' + error.errorcode[7].errorid,
+            title: '--提醒--',
             content: error.errorcode[7].errorname,
             showCancel: false,
             success: function (res) {
@@ -175,7 +179,7 @@ Page({
       fail: function (res) {
         console.log("updatelikecountfailed")
         wx.showModal({
-          title: '错误代码：' + error.errorcode[9].errorid,
+          title: '--提醒--',
           content: error.errorcode[9].errorname,
           showCancel: false,
           success: function (res) {
@@ -196,7 +200,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: 'https://maodong.yunzjin.com/schoolservice/removeArticleServlet',
+            url: url.urlstr +'schoolservice/removeArticleServlet',
             data: {
               articleid: event.currentTarget.dataset.deleteId
             },
@@ -239,7 +243,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showArticlePageByLableServlet',
+      url: url.urlstr +'schoolservice/showArticlePageByLableServlet',
       data: {
         currentId: 0,
         lableid:that.data.lableid,
@@ -280,7 +284,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showArticlePageServlet',
+      url: url.urlstr +'schoolservice/showArticlePageServlet',
       data: {
         currentId: that.data.currentId,
         lableid:that.data.lableid,
@@ -326,7 +330,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showArticlePageByLableOBHotServlet',
+      url: url.urlstr +'schoolservice/showArticlePageByLableOBHotServlet',
       data: {
         linesize: that.data.lineSize1,
         daysbefore: that.data.daysbefore,

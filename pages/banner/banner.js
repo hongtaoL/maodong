@@ -1,17 +1,12 @@
 // pages/banner/banner.js
 Page({
   data:{
-    img:null,
-    width:null,
-    height:null
-
+    url:null
   },
   onLoad:function(e){
     // 页面初始化 e为页面跳转所带来的参数
     this.setData({
-      img: e.picurl1,
-      width: e.width,
-      height: e.height
+      url: unescape(e.url)
     })
   },
   onReady:function(){

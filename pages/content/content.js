@@ -1,6 +1,8 @@
 // pages/content/content.js
 var util = require('../../utils/util.js')
 var error = util.getError();
+var data_index = require('../../data/data_index.js')
+var url = data_index.index;
 var app = getApp();
 Page({
   data: {
@@ -20,7 +22,7 @@ Page({
     feed: [],
     feed_length: 2,
     content: [],
-    userInfo: null,
+    userInfo: {},
     openId: null,
     inputValue: null,
     commhidden: true,
@@ -44,6 +46,9 @@ Page({
   },
   onShow: function () {
     // 页面显示
+    this.setData({
+      openId: wx.getStorageSync('openId')
+    });
   },
   onHide: function () {
     // 页面隐藏
@@ -53,6 +58,7 @@ Page({
   },
   //评论输入框开始输入
   textinput: function (e) {
+    if (wx.getStorageSync('openId')) {
     this.setData({
       inputValue: e.detail.value
     });
@@ -64,8 +70,32 @@ Page({
         commhidden: true,
         tabdisable: true
       })
+    } else {
+      wx.showModal({
+        title: '--提醒--',
+        content: error.errorcode[4].errorname,
+        showCancel: false,
+        success: function (res) {
+          if (res.confirm) {
+            console.log(error.errorcode[4].errorid + '用户点击确定')
+          }
+        }
+      })
+    }
+  
   },
-
+  // 分享当前页面
+  onShareAppMessage: function (res) {
+    return {
+      title: '快来看看猫洞里又发生了什么',
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
+  },
   //提交评论
   formSubmit: function (e) {
     this.setData({
@@ -77,13 +107,14 @@ Page({
     var replycontent = this.data.feed;
     var replycount = this.data.content[0].reply + 1;
 
+
     //将内容组成json对象
     reply = { "anonymous": e.detail.value.switch, "articleid": that.data.articleid, "userid": that.data.openId, "gender": that.data.userInfo.gender, "nickname": that.data.userInfo.nickName, "avatar": that.data.userInfo.avatarUrl, "content": e.detail.value.input, "pubdate": this.getNowFormatDate() };
     //加到数组中
     replycontent.push(reply);
     console.log(replycount);
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/updateReplyContentServlet',
+      url: url.urlstr +'schoolservice/updateReplyContentServlet',
       data: {
         articleid: that.data.articleid,
         rcontent: reply,
@@ -97,7 +128,7 @@ Page({
         if (res.data.error) {//判断数据库异常
           //数据库抛出异常，弹出提示信息
           wx.showModal({
-            title: '错误代码：' + error.errorcode[7].errorid,
+            title: '--提醒--',
             content: error.errorcode[7].errorname,
             showCancel: false,
             success: function (res) {
@@ -114,7 +145,7 @@ Page({
       fail: function (res) {
         console.log("getArticlefailed")
         wx.showModal({
-          title: '错误代码：' + error.errorcode[10].errorid,
+          title: '--提醒--',
           content: error.errorcode[10].errorname,
           showCancel: false,
           success: function (res) {
@@ -128,6 +159,22 @@ Page({
 
     console.log(replycontent);
   },
+
+  // 清除评论框内容
+  clearInputEvent: function (res) {
+    this.setData({
+      'inputValue': null,
+      'tabdisable': true
+    })
+  },
+
+  //返回首页
+  backTop: function() {
+    wx.switchTab({
+      url: 'pages/index/index',
+    })
+  },
+  
   //删除评论
   deleteComment: function (e) {
     var that = this
@@ -156,7 +203,7 @@ Page({
             })
             //发送删除请求
             wx.request({
-              url: 'https://maodong.yunzjin.com/schoolservice/updateReplyContentServlet',
+              url: url.urlstr +'schoolservice/updateReplyContentServlet',
               data: {
                 articleid: that.data.articleid,
                 rcontent: reply,
@@ -170,7 +217,7 @@ Page({
                 if (res.data.error) {//判断数据库异常
                   //数据库抛出异常，弹出提示信息
                   wx.showModal({
-                    title: '错误代码：' + error.errorcode[7].errorid,
+                    title: '--提醒--',
                     content: error.errorcode[7].errorname,
                     showCancel: false,
                     success: function (res) {
@@ -187,7 +234,7 @@ Page({
               fail: function (res) {
                 console.log("getArticlefailed")
                 wx.showModal({
-                  title: '错误代码：' + error.errorcode[11].errorid,
+                  title: '--提醒--' ,
                   content: error.errorcode[11].errorname,
                   showCancel: false,
                   success: function (res) {
@@ -243,7 +290,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/updateCollectionServlet',
+      url: url.urlstr +'schoolservice/updateCollectionServlet',
       data: {
         articleid: articleid,
         status: collectionstatus,
@@ -256,7 +303,7 @@ Page({
         if (res.data.error) {//判断数据库异常
           //数据库抛出异常，弹出提示信息
           wx.showModal({
-            title: '错误代码：' + error.errorcode[7].errorid,
+            title: '--提醒--' ,
             content: error.errorcode[7].errorname,
             showCancel: false,
             success: function (res) {
@@ -288,7 +335,7 @@ Page({
       fail: function (res) {
         console.log("updatelikecountfailed")
         wx.showModal({
-          title: '错误代码：' + error.errorcode[12].errorid,
+          title: '--提醒--',
           content: error.errorcode[12].errorname,
           showCancel: false,
           success: function (res) {
@@ -337,7 +384,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/updateFavourCountServlet',
+      url: url.urlstr +'schoolservice/updateFavourCountServlet',
       data: {
         articleid: articleid,
         count: count,
@@ -350,7 +397,7 @@ Page({
         if (res.data.error) {//判断数据库异常
           //数据库抛出异常，弹出提示信息
           wx.showModal({
-            title: '错误代码：' + error.errorcode[7].errorid,
+            title: '--提醒--',
             content: error.errorcode[7].errorname,
             showCancel: false,
             success: function (res) {
@@ -369,7 +416,7 @@ Page({
       fail: function (res) {
         console.log("updatelikecountfailed")
         wx.showModal({
-          title: '错误代码：' + error.errorcode[9].errorid,
+          title: '--提醒--',
           content: error.errorcode[9].errorname,
           showCancel: false,
           success: function (res) {
@@ -405,7 +452,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showArticleInfoServlet',
+      url: url.urlstr +'schoolservice/showArticleInfoServlet',
       data: {
         articleid: that.data.articleid,
       },
@@ -416,7 +463,7 @@ Page({
         if (res.data.error) {//判断数据库异常
           //数据库抛出异常，弹出提示信息
           wx.showModal({
-            title: '错误代码：' + error.errorcode[7].errorid,
+            title: '--提醒--',
             content: error.errorcode[7].errorname,
             showCancel: false,
             success: function (res) {
@@ -454,7 +501,7 @@ Page({
       fail: function (res) {
         console.log("getArticlefailed")
         wx.showModal({
-          title: '错误代码：' + error.errorcode[13].errorid,
+          title: '--提醒--',
           content: error.errorcode[13].errorname,
           showCancel: false,
           success: function (res) {

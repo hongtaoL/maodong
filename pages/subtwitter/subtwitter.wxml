@@ -30,7 +30,7 @@
 
     <!--提交-->
     <view class="subbutton">
-      <button size="default" type="{{types[1]}}" disabled="{{disabled}}" form-type="submit" bindtap="setLaoding" hover-class="button-hover"> 提交 </button>
+      <button class="btn" size="default" type="{{types[1]}}" disabled="{{disabled}}" form-type="submit" bindtap="setLaoding" hover-class="button-hover"> 提交 </button>
     </view>
   </form>
 </view>

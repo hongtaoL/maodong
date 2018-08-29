@@ -2,7 +2,8 @@
 <!--my.wxml-->
 <view class="container">
   <view wx:if="{{!hasUserInfo && canIUse}}" class="userinfo_top">
-    <button  open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="getUserBtn"> 获取头像昵称 </button>
+    <button  open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="getUserBtn"> 点击登陆 </button>
+    <text class='tip'>点击才能解锁全部功能哦~</text>
   </view>
   <view wx:else class="userinfo">
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
@@ -62,7 +63,7 @@
                   <a> {{item.reply}} </a> 
                 </view>
                 <view class="like">
-                  <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{PPA}}" bindtap="AddLikeTap"></image>
+                  <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{PPA}}" bindtap="{{openId?'AddLikeTap':''}}"></image>
                   <a> {{item.favour}} </a> 
                 </view>
               </view>
@@ -116,7 +117,7 @@
                   <a> {{item.reply}} </a> 
                 </view>
                 <view class="like">
-                  <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{MYC}}" bindtap="AddLikeTap"></image>
+                  <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{MYC}}" bindtap="{{openId?'AddLikeTap':''}}"></image>
                   <a> {{item.favour}} </a> 
                 </view>
               </view>
@@ -171,7 +172,7 @@
                   <a> {{item.reply}} </a> 
                 </view>
                 <view class="like">
-                  <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{MYC}}" bindtap="AddLikeTap"></image>
+                  <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{MYC}}" bindtap="{{openId?'AddLikeTap':''}}"></image>
                   <a> {{item.favour}} </a> 
                 </view>
               </view>

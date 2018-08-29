@@ -128,7 +128,7 @@ float: right;
 }
 
 .container .feed-item1 .feed-content {
-  padding: 10rpx 0 0 0;
+  padding: -10rpx 0 0 0;
 }
 
 .container .feed-item1 .feed-content .feed-content-top {
@@ -167,12 +167,17 @@ float: right;
 }
 
 .container .feed-item1 .feed-content .answer-body {
+  margin-left: 100rpx;
   padding: 10rpx 0 0 0;
   /*height: 10rpx;*/
-  width: 650rpx;
+  width: 520rpx;
   font-size: 24rpx;
   line-height: 28rpx;
   color: #5b5b5b;
+}
+
+.container .feed-item1 .feed-content .answer-body text {
+   word-break: break-all;
 }
 
 .container .feed-item1 .feed-content .content-bottom {
@@ -242,4 +247,16 @@ float: right;
   color: #5b5b5b;
   margin-left: 10rpx;
   float: left;
+}
+
+.back-top {
+  position: fixed;
+  right: 5px;
+  bottom: 8%;
+}
+
+.back-top image {
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 120rpx;
 }

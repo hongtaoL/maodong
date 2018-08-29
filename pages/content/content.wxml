@@ -43,11 +43,11 @@
                
             </view>
             <view class="collection" >
-              <image src="{{collectionstatus=='true'?collectionImg[1]:collectionImg[0]}}" bindtap="AddCollectionsTap" data-articleid="{{item.articleid}}" data-updateid="{{idxx}}" data-updateitem="{{content}}"></image>
+              <image src="{{collectionstatus=='true'?collectionImg[1]:collectionImg[0]}}" bindtap="{{openId?'AddCollectionsTap':''}}" data-articleid="{{item.articleid}}" data-updateid="{{idxx}}" data-updateitem="{{content}}"></image>
               <a>收藏</a>
             </view>
             <view class="like">
-              <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{content}}" bindtap="AddLikeTap"></image>
+              <image id="{{item.articleid}}" src="{{item.favourstatus=='true'?likeImg[1]:likeImg[0]}}" data-updateid="{{idxx}}" data-updateitem="{{content}}" bindtap="{{openId?'AddLikeTap':''}}"></image>
               <a> {{item.favour}} </a> 
             </view>
           </view>
@@ -110,12 +110,16 @@
 <view class="commentArea">
   <form bindsubmit="formSubmit" report-submit="true">
   <view class="firstLine">
-    <input name="input" auto-height="true" placeholder="评论" bindinput="textinput" cursor-spacing="50"/>
-    <button size="mini" form-type="submit" disabled="{{tabdisable}}">发送</button>
+    <input name="input" auto-height="true" placeholder="评论" value="{{inputValue}}" bindinput="textinput" cursor-spacing="50"/>
+    <button size="mini" form-type="submit" disabled="{{tabdisable}}" bindtap="clearInputEvent">发送</button>
   </view>
   <view class="secondLine" hidden="{{commhidden}}">
     <view class="niming" >匿名发布</view>
     <switch name="switch" color="#F5A623"/>
   </view>
-</form>
+  </form>
+  </view>
+
+  <view class="back-top">
+    <image bindtap="backTop" src="../../images/index.png"      ></image>
   </view>

@@ -1,6 +1,8 @@
 //index.js
 var util = require('../../utils/util.js')
 var error = util.getError();
+var data_index = require('../../data/data_index.js')
+var url = data_index.index;
 Page({
   data: {
     navTab: ["按时间", "按热度",],
@@ -28,8 +30,8 @@ Page({
     lineSize1: 100,
     daysbefore: 3,
     openId: null,
-    admin1:'o2A760PcrLXMg6msbsmB8QvKpxhs',
-    admin2:'o2A760PcrLXMg6msbsmB8QvKpxhs'
+    admin1:'oDfPr0FviysZr4jqtsRn41LTbJmU',
+    admin2:'oDfPr0OMIfxpwLFJ-e_I8JufLOMY'
   },
   onLoad: function () {
     console.log('onLoad')
@@ -56,6 +58,9 @@ Page({
       duration: 300
     })
     console.log('onshow')
+    this.setData({
+      openId: wx.getStorageSync('openId')
+    });
   },
   //tab切换
   switchTab: function (e) {
@@ -63,6 +68,19 @@ Page({
       currentNavtab: e.currentTarget.dataset.idx
     });
     this.refresh();
+  },
+
+  // 分享当前页面
+  onShareAppMessage: function (res) {
+    return {
+      title: '快来看看猫洞里又发生了什么',
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
+    }
   },
   //发布按钮
   plusTap: function () {
@@ -72,7 +90,7 @@ Page({
       })
     } else {
       wx.showModal({
-        title: '错误代码：' + error.errorcode[4].errorid,
+        title: '--提醒--',
         content: error.errorcode[4].errorname,
         showCancel: false,
         success: function (res) {
@@ -87,7 +105,7 @@ Page({
   banner: function (e) {
     var that = this
     var index = e.currentTarget.dataset.index
-    var urll = '../banner/banner?width=' + that.data.imgUrls[index].width + '&height=' + that.data.imgUrls[index].height + '&picurl1=' + that.data.imgUrls[index].picurl1;
+    var urll = '../banner/banner?url=' + escape(that.data.imgUrls[index].picurl1);
     console.log(urll)
     wx.navigateTo({
       url: urll,
@@ -148,7 +166,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/updateFavourCountServlet',
+      url: url.urlstr +'schoolservice/updateFavourCountServlet',
       data: {
         articleid: articleid,
         count: count,
@@ -161,7 +179,7 @@ Page({
         if (res.data.error) {//判断数据库异常
           //数据库抛出异常，弹出提示信息
           wx.showModal({
-            title: '错误代码：' + error.errorcode[7].errorid,
+            title: '--提醒--',
             content: error.errorcode[7].errorname,
             showCancel: false,
             success: function (res) {
@@ -180,7 +198,7 @@ Page({
       fail: function (res) {
         console.log("updatelikecountfailed")
         wx.showModal({
-          title: '错误代码：' + error.errorcode[9].errorid,
+          title: '--提醒--',
           content: error.errorcode[9].errorname,
           showCancel: false,
           success: function (res) {
@@ -201,7 +219,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: 'https://maodong.yunzjin.com/schoolservice/removeArticleServlet',
+            url: url.urlstr +'schoolservice/removeArticleServlet',
             data: {
               articleid: event.currentTarget.dataset.deleteId
             },
@@ -244,7 +262,7 @@ Page({
   getBanners: function () {
     var that = this
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showBannersServlet',
+      url: url.urlstr +'schoolservice/showBannersServlet',
       success: function (res) {
         that.setData({
           imgUrls: res.data
@@ -262,7 +280,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showArticlePageServlet',
+      url: url.urlstr +'schoolservice/showArticlePageServlet',
       data: {
         currentId: 0,
         lineSize: that.data.lineSize
@@ -302,7 +320,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showArticlePageServlet',
+      url: url.urlstr +'schoolservice/showArticlePageServlet',
       data: {
         currentId: that.data.currentId,
         lineSize: that.data.lineSize
@@ -347,7 +365,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showArticlePageOBHotServlet',
+      url: url.urlstr +'schoolservice/showArticlePageOBHotServlet',
       data: {
         linesize: that.data.lineSize1,
         daysbefore: that.data.daysbefore

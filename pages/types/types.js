@@ -1,5 +1,6 @@
 // types.js
-
+var data_index = require('../../data/data_index.js')
+var url = data_index.index;
 Page({
   data: {
     indicatorDots: true,
@@ -34,13 +35,15 @@ console.log('onLoad')
       icon: 'loading',
       duration: 300
     })
-     console.log('onshow')
+    this.setData({
+      openId: wx.getStorageSync('openId')
+    });
   },
   //使用网络请求数据, 实现首页刷新
   refresh: function () {
     var that = this
     wx.request({
-      url: 'https://maodong.yunzjin.com/schoolservice/showLablesServlet',
+      url: url.urlstr +'schoolservice/showLablesServlet',
       success: function (res) {
         that.setData({
           typeitems: res.data

@@ -112,6 +112,11 @@
   font-size: 28rpx;
   line-height: 20px;
   color: #5b5b5b;
+  
+}
+
+.container .feed-item .feed-content .answer-body text  {
+   word-break: break-all;
 }
 
 
@@ -144,7 +149,7 @@
   display: inline-block;
   line-height: 30rpx;
   vertical-align: middle;
-  margin: 5 0 0 10rpx;
+  margin: 5 0 0 0rpx;
   color: #a0acac;
   font-size: 22rpx;
   /*border: 1px solid #a0acac;*/
