@@ -1,10 +1,14 @@
 /**index.wxss**/
 .topcontainer{
-  height: 100%;
+  height: 100rpx;
   display: flex;
+  position: fixed;
+  z-index: 99;
 }
 
 .container{
+  top:100rpx;
+  position: fixed;
   height: 1030rpx;
 }
 

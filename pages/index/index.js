@@ -33,8 +33,13 @@ Page({
     admin1:'oDfPr0FviysZr4jqtsRn41LTbJmU',
     admin2:'oDfPr0OMIfxpwLFJ-e_I8JufLOMY'
   },
-  onLoad: function () {
+  onLoad: function (options) {
     console.log('onLoad')
+    if (options.articleId) {
+      wx.navigateTo({
+        url: '../content/content?articleid=' + options.articleId,
+      })
+    }
     var that = this
     //调用应用实例的方法获取全局数据
     wx.showToast({

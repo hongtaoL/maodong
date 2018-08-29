@@ -86,8 +86,10 @@ Page({
   },
   // 分享当前页面
   onShareAppMessage: function (res) {
+    var that = this
     return {
       title: '快来看看猫洞里又发生了什么',
+      path: 'pages/index/index?articleId=' + that.data.content[0].articleid,
       success: function (res) {
         // 转发成功
       },
@@ -464,11 +466,14 @@ Page({
           //数据库抛出异常，弹出提示信息
           wx.showModal({
             title: '--提醒--',
-            content: error.errorcode[7].errorname,
+            content: error.errorcode[14].errorname,
             showCancel: false,
             success: function (res) {
               if (res.confirm) {
-                console.log(error.errorcode[7].errorid + '用户点击确定')
+                console.log(error.errorcode[14].errorid + '用户点击确定')
+                wx.navigateBack({
+                  delta: 1
+                })
               }
             }
           })

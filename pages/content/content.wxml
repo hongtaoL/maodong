@@ -119,7 +119,3 @@
   </view>
   </form>
   </view>
-
-  <view class="back-top">
-    <image bindtap="backTop" src="../../images/index.png"      ></image>
-  </view>
