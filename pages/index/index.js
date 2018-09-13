@@ -5,6 +5,7 @@ var data_index = require('../../data/data_index.js')
 var url = data_index.index;
 Page({
   data: {
+    contentHeight:0,
     navTab: ["按时间", "按热度",],
     currentNavtab: "0",
     imgUrls: [],
@@ -31,7 +32,7 @@ Page({
     daysbefore: 3,
     openId: null,
     admin1:'oDfPr0FviysZr4jqtsRn41LTbJmU',
-    admin2:'oDfPr0OMIfxpwLFJ-e_I8JufLOMY'
+    admin2:'oDfPr0OMIfxpwLFJ-e_I8JufLOMY',
   },
   onLoad: function (options) {
     console.log('onLoad')
@@ -52,6 +53,19 @@ Page({
     this.setData({
       openId: wx.getStorageSync('openId')
     });
+    // 获取系统信息
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res);
+        // 可使用窗口宽度、高度
+        console.log('height=' + res.windowHeight);
+        console.log('width=' + res.windowWidth);
+        that.setData({
+          // second部分高度 = 利用窗口可使用高度 - first部分高度（这里的高度单位为px）
+          contentHeight: res.windowHeight - res.windowWidth / 750 * 100
+        })
+      }
+    })
   },
   onShow: function () {
     var that = this
@@ -60,7 +74,7 @@ Page({
     wx.showToast({
       title: '加载中..',
       icon: 'loading',
-      duration: 300
+      duration: 600
     })
     console.log('onshow')
     this.setData({
@@ -171,7 +185,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: url.urlstr +'schoolservice/updateFavourCountServlet',
+      url: url.urlstr +'updateFavourCountServlet',
       data: {
         articleid: articleid,
         count: count,
@@ -224,7 +238,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: url.urlstr +'schoolservice/removeArticleServlet',
+            url: url.urlstr +'removeArticleServlet',
             data: {
               articleid: event.currentTarget.dataset.deleteId
             },
@@ -267,7 +281,7 @@ Page({
   getBanners: function () {
     var that = this
     wx.request({
-      url: url.urlstr +'schoolservice/showBannersServlet',
+      url: url.urlstr +'showBannersServlet',
       success: function (res) {
         that.setData({
           imgUrls: res.data
@@ -285,7 +299,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr +'schoolservice/showArticlePageServlet',
+      url: url.urlstr +'showArticlePageServlet',
       data: {
         currentId: 0,
         lineSize: that.data.lineSize
@@ -325,7 +339,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr +'schoolservice/showArticlePageServlet',
+      url: url.urlstr +'showArticlePageServlet',
       data: {
         currentId: that.data.currentId,
         lineSize: that.data.lineSize
@@ -370,7 +384,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr +'schoolservice/showArticlePageOBHotServlet',
+      url: url.urlstr +'showArticlePageOBHotServlet',
       data: {
         linesize: that.data.lineSize1,
         daysbefore: that.data.daysbefore

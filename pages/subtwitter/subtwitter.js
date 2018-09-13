@@ -73,7 +73,7 @@ Page({
     //获取用户信息，成功则发送连接请求
     if (wx.getStorageSync('openId')) {
       wx.request({
-        url: url.urlstr +'schoolservice/addArticleServlet',
+        url: url.urlstr +'addArticleServlet',
         data: {
           anonymous: e.detail.value.anonymous,
           content: e.detail.value.content,

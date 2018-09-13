@@ -22,6 +22,7 @@ var errorcode = {
         {"errorid":"0012","errorname":"抱歉，连接收藏服务器失败，不能评论"},
         {"errorid":"0013","errorname":"抱歉，获取文章服务器失败，不能评论"},
         {"errorid":"0014", "errorname": "啊哦，内容不在了，看点别的吧~" },
+      { "errorid": "0014", "errorname": "啊哦，内容不在了，看点别的吧~" },
     ]
 
 }

@@ -147,7 +147,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: url.urlstr +'schoolservice/updateFavourCountServlet',
+      url: url.urlstr +'updateFavourCountServlet',
       data: {
         articleid: articleid,
         count: count,
@@ -200,7 +200,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: url.urlstr +'schoolservice/removeArticleServlet',
+            url: url.urlstr +'removeArticleServlet',
             data: {
               articleid: event.currentTarget.dataset.deleteId
             },
@@ -243,7 +243,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr +'schoolservice/showArticlePageByLableServlet',
+      url: url.urlstr +'showArticlePageByLableServlet',
       data: {
         currentId: 0,
         lableid:that.data.lableid,
@@ -284,7 +284,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr +'schoolservice/showArticlePageServlet',
+      url: url.urlstr +'showArticlePageServlet',
       data: {
         currentId: that.data.currentId,
         lableid:that.data.lableid,
@@ -330,7 +330,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr +'schoolservice/showArticlePageByLableOBHotServlet',
+      url: url.urlstr +'showArticlePageByLableOBHotServlet',
       data: {
         linesize: that.data.lineSize1,
         daysbefore: that.data.daysbefore,

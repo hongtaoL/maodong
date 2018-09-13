@@ -43,7 +43,7 @@ console.log('onLoad')
   refresh: function () {
     var that = this
     wx.request({
-      url: url.urlstr +'schoolservice/showLablesServlet',
+      url: url.urlstr +'showLablesServlet',
       success: function (res) {
         that.setData({
           typeitems: res.data

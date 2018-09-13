@@ -27,7 +27,7 @@ Page({
       wx.showModal({
         title: '--提醒--',
         content: error.errorcode[4].errorname,
-        confirmText: '授权',
+        confirmText: '好的',
         cancelText: '返回',
         success: function (res) {
           if (res.confirm) {
@@ -71,7 +71,7 @@ Page({
   getLables: function () {
     var that = this 
     wx.request({
-      url: url.urlstr +'schoolservice/showLablesServlet',
+      url: url.urlstr +'showLablesServlet',
       success: function (res) {
         that.setData({
           typeitems: res.data
@@ -88,7 +88,7 @@ Page({
     //获取用户信息，成功则发送连接请求
     if (wx.getStorageSync('openId')) {
       wx.request({
-        url: url.urlstr +'schoolservice/addArticleServlet',
+        url: url.urlstr +'addArticleServlet',
         data: {
           anonymous: e.detail.value.anonymous,
           content: e.detail.value.content,

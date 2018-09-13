@@ -7,10 +7,9 @@ var url = data_index.index;
 const app = getApp()
 Page({
   data: {
-    userInfo: {},
+    userInfo: null,
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    code: null,
     // navTab: ["我的发言", "我的收藏","精彩推荐"],
     navTab: ["我的发言", "我的收藏"],
     currentNavtab: "0",
@@ -31,100 +30,91 @@ Page({
     openId: null,
   },
   onLoad: function () {
+    var that = this
     console.log('onLoad')
-    this.setData({
-      code: app.globalData.code,
-    })
-    this.setData({
-      openId: wx.getStorageSync('openId')
-    });
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
+    if (wx.getStorageSync('openId') && wx.getStorageSync('userInfo')){
+      that.setData({
+        openId: wx.getStorageSync('openId'),
+        userInfo: wx.getStorageSync('userInfo'),
         hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
+      });
+    }else{
+      that.getUserInfo()
     }
-    //  else {
-    //   // 在没有 open-type=getUserInfo 版本的兼容处理
-    //   wx.getUserInfo({
-    //     success: res => {
-    //       app.globalData.userInfo = res.userInfo
-    //       this.setData({
-    //         userInfo: res.userInfo,
-    //         hasUserInfo: true
-    //       })
-    //     }
-    //   })
-    // }
     this.getMyArticleList();
   },
-  getRegister: function () {
+  getUserInfo: function () {
+    this.userRegister()
+  },
+  //用户信息注册
+  userRegister: function (openId) {
+    console.log("app_userRegister")
     var that = this
-    console.log("avatarUrl=" + that.data.userInfo.avatarUrl)
-    wx.request({
-      url: url.urlstr+'schoolservice/registerServlet',
-      data: {
-        avatar: that.data.userInfo.avatarUrl,
-        code: that.data.code,
-        nickName: that.data.userInfo.nickName,
-        gender: that.data.userInfo.gender,
-      },
-      method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
-      // header: {}, // 设置请求的 header
-      success: function (res) {
-        // success 保存用户信息
-        if (res.data.userid) {//运行正常
-          that.data.openId = res.data.userid
-          console.log("openid=" + that.data.openId)
-          wx.setStorageSync('openId', that.data.openId)
-          that.setData({
-            'openId': that.data.openId
-          })
-        } else {//用户id为空，数据库插入操作失败
-          wx.showModal({
-            title: '--提醒--',
-            content: error.errorcode[2].errorname,
-            success: function (res) {
-              if (res.confirm) {
-                console.log(error.errorcode[2].errorid + '用户点击确定')
-              } else console.log(error.errorcode[2].errorid + '用户点击取消')
+    wx.login({
+      success: res => {
+        that.data.code = res.code
+        //获取失败则调用用户注册
+        wx.getSetting({
+          success: res => {
+            if (res.authSetting['scope.userInfo']) {
+              // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+              wx.getUserInfo({
+                success: res => {
+                  wx.request({
+                    url: url.urlstr + 'registerServlet',
+                    data: {
+                      avatar: res.userInfo.avatarUrl,
+                      code: that.data.code,
+                      nickName: res.userInfo.nickName,
+                      gender: res.userInfo.gender,
+                    },
+                    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                    // header: {}, // 设置请求的 header
+                    success: function (res) {
+                      // success 保存用户信息
+                      if (res.data.userid) {//运行正常
+                        console.log(res.data.nickname)
+                        wx.setStorageSync('openId', res.data.userid)
+                        wx.setStorageSync('userInfo', res.data)
+                        that.setData({
+                          userInfo: wx.getStorageSync('userInfo'),
+                          openId: wx.getStorageSync('openId'),
+                          hasUserInfo:true
+                        })
+                      } else {//用户id为空，数据库插入操作失败
+                        wx.showModal({
+                          title: '--提醒--',
+                          content: error.errorcode[2].errorname,
+                          success: function (res) {
+                            if (res.confirm) {
+                              console.log(error.errorcode[2].errorid + '用户点击确定')
+                            } else console.log(error.errorcode[2].errorid + '用户点击取消')
+                          }
+                        })
+                      }
+                    },
+                    fail: function (res) {
+                      //连接服务器失败，弹出提示信息
+                      wx.showModal({
+                        title: '--提醒--',
+                        content: error.errorcode[3].errorname,
+                        success: function (res) {
+                          if (res.confirm) {
+                            console.log(error.errorcode[3].errorid + '用户点击确定')
+                          } else console.log(error.errorcode[3].errorid + '用户点击取消')
+                        }
+                      })
+                    }
+                  })
+                }
+              })
+            } else {
+              console.log("没有授权")
             }
-          })
-        }
-
-      },
-      fail: function (res) {
-        //连接服务器失败，弹出提示信息
-        wx.showModal({
-          title: '--提醒--',
-          content: error.errorcode[3].errorname,
-          success: function (res) {
-            if (res.confirm) {
-              console.log(error.errorcode[3].errorid + '用户点击确定')
-            } else console.log(error.errorcode[3].errorid + '用户点击取消')
           }
         })
       }
     })
-  },
-  getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-    console.log('getRegister')
-    this.getRegister()
   },
   onShow: function () {
     var that = this
@@ -159,7 +149,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr+'schoolservice/showMyArticleServlet',
+      url: url.urlstr+'showMyArticleServlet',
       data: {
         userid: that.data.openId
       },
@@ -193,7 +183,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr+'schoolservice/showCollectionArticleServlet',
+      url: url.urlstr+'showCollectionArticleServlet',
       data: {
         userid: that.data.openId
       },
@@ -227,7 +217,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr +'schoolservice/showRecommendArticleServlet',
+      url: url.urlstr +'showRecommendArticleServlet',
       data: {
         userid: that.data.openId
       },
@@ -312,7 +302,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: url.urlstr +'schoolservice/updateFavourCountServlet',
+      url: url.urlstr +'updateFavourCountServlet',
       data: {
         articleid: articleid,
         count: count,
@@ -365,7 +355,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: url.urlstr +'schoolservice/removeArticleServlet',
+            url: url.urlstr +'removeArticleServlet',
             data: {
               articleid: event.currentTarget.dataset.deleteId
             },

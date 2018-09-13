@@ -16,7 +16,7 @@
 </view>
 
 <!--以上是top-tab和发布按钮&下面是滚动内容-->
-<scroll-view scroll-y="true" class="container index" enable-back-to-top="true" bindscrolltoupper="upper" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+<scroll-view scroll-y="true" class="container index" enable-back-to-top="true" bindscrolltoupper="upper" bindscrolltolower="lower" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" style='height:{{contentHeight}}px;'>
 
   <!--==================第一页==========
   ===-->

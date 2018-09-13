@@ -37,7 +37,7 @@ Page({
     this.setData({
       articleid: e.articleid,
       openId: wx.getStorageSync('openId'),
-      userInfo: app.globalData.userInfo
+      userInfo: wx.getStorageSync('userInfo'),
     })
     this.getArticle();
   },
@@ -116,7 +116,7 @@ Page({
     replycontent.push(reply);
     console.log(replycount);
     wx.request({
-      url: url.urlstr +'schoolservice/updateReplyContentServlet',
+      url: url.urlstr +'updateReplyContentServlet',
       data: {
         articleid: that.data.articleid,
         rcontent: reply,
@@ -205,7 +205,7 @@ Page({
             })
             //发送删除请求
             wx.request({
-              url: url.urlstr +'schoolservice/updateReplyContentServlet',
+              url: url.urlstr +'updateReplyContentServlet',
               data: {
                 articleid: that.data.articleid,
                 rcontent: reply,
@@ -292,7 +292,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: url.urlstr +'schoolservice/updateCollectionServlet',
+      url: url.urlstr +'updateCollectionServlet',
       data: {
         articleid: articleid,
         status: collectionstatus,
@@ -386,7 +386,7 @@ Page({
       console.log("flase")
     }
     wx.request({
-      url: url.urlstr +'schoolservice/updateFavourCountServlet',
+      url: url.urlstr +'updateFavourCountServlet',
       data: {
         articleid: articleid,
         count: count,
@@ -454,7 +454,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr +'schoolservice/showArticleInfoServlet',
+      url: url.urlstr +'showArticleInfoServlet',
       data: {
         articleid: that.data.articleid,
       },
