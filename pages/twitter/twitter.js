@@ -122,7 +122,22 @@ Page({
               wx.navigateBack({
                 delta: 1, // 回退前 delta(默认为1) 页面
               })
-            } else {//发布失败，提示
+            } else if (res.data.status == '3') {//发布失败，提示
+              wx.showModal({
+                title: '提示',
+                content: '请注意维护文明网络环境~',
+                cancelText: '返回',
+                success: function (res) {
+                  if (res.confirm) {
+                    console.log('发布失败,用户点击确定')
+                  } else {
+                    wx.navigateBack({
+                      delta: 1, // 回退前 delta(默认为1) 页面
+                    })
+                  }
+                }
+              })
+            }else{
               wx.showModal({
                 title: '提示',
                 content: '发布失败，请重试',
