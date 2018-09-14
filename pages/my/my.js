@@ -48,7 +48,7 @@ Page({
   },
   //用户信息注册
   userRegister: function (openId) {
-    console.log("app_userRegister")
+    console.log("my_userRegister")
     var that = this
     wx.login({
       success: res => {
