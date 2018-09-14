@@ -111,7 +111,7 @@ Page({
 
 
     //将内容组成json对象
-    reply = { "anonymous": e.detail.value.switch, "articleid": that.data.articleid, "userid": that.data.openId, "gender": that.data.userInfo.gender, "nickname": that.data.userInfo.nickName, "avatar": that.data.userInfo.avatarUrl, "content": e.detail.value.input, "pubdate": this.getNowFormatDate() };
+    reply = { "anonymous": e.detail.value.switch, "articleid": that.data.articleid, "userid": that.data.openId, "gender": that.data.userInfo.gender, "nickname": that.data.userInfo.nickname, "avatar": that.data.userInfo.avatar, "content": e.detail.value.input, "pubdate": this.getNowFormatDate() };
     //加到数组中
     replycontent.push(reply);
     console.log(replycount);

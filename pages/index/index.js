@@ -33,6 +33,7 @@ Page({
     openId: null,
     admin1:'oDfPr0FviysZr4jqtsRn41LTbJmU',
     admin2:'oDfPr0OMIfxpwLFJ-e_I8JufLOMY',
+    showTips: true,
   },
   onLoad: function (options) {
     console.log('onLoad')
@@ -66,6 +67,12 @@ Page({
         })
       }
     })
+    setTimeout(function () {
+      this.showTips = false;
+      this.setData({
+        showTips: this.showTips
+      });
+    }.bind(this), 3000);
   },
   onShow: function () {
     var that = this

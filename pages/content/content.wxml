@@ -25,7 +25,7 @@
 
           <!--以下的名字-->
           <view class="name">
-            <text>{{item.anonymous=='true'?'匿名用户':item.nickname}}</text>
+            <text>{{item.anonymous=='true'?'某同学':item.nickname}}</text>
           </view>
           <view class="types">{{item.lablename}}</view>
         </view>
@@ -76,7 +76,7 @@
 
           <!--以下的名字-->
           <view class="name">
-            <text>{{item.anonymous=='true'?'匿名用户':item.nickname}}</text>
+            <text>{{item.anonymous=='true'?'某同学':item.nickname}}</text>
           </view>
           <view class="time">{{item.pubdate}}</view>
         </view>
