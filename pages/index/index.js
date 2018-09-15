@@ -26,7 +26,7 @@ Page({
     feed_length: 0,
     feed1: [],
     feed1_length: 0,
-    currentId: 0,
+    currentId: "0",
     lineSize: 10,
     lineSize1: 100,
     daysbefore: 3,
@@ -308,7 +308,7 @@ Page({
     wx.request({
       url: url.urlstr +'showArticlePageServlet',
       data: {
-        currentId: 0,
+        currentId: "0",
         lineSize: that.data.lineSize
       },
       //header: {
@@ -330,7 +330,7 @@ Page({
         })
         if (res.data.length > 0) {
           that.setData({
-            currentId: res.data[res.data.length - 1].articleid
+            currentId: res.data[res.data.length - 1].updatetime
           })
         }
         console.log("getOnLineData1success")
@@ -366,7 +366,7 @@ Page({
           }
           var next_data = res.data;
           that.setData({
-            currentId: res.data[res.data.length - 1].articleid,
+            currentId: res.data[res.data.length - 1].updatetime,
             feed: that.data.feed.concat(next_data),
             feed_length: that.data.feed_length + next_data.length
           })
@@ -431,7 +431,10 @@ Page({
   },
   //页面加载
   nextLoad: function () {
-    this.getOnLineData2();
+    var that =this
+    if(that.data.currentNavtab == 0){
+      that.getOnLineData2();
+    }
   },
 
 });

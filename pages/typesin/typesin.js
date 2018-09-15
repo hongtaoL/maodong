@@ -271,10 +271,10 @@ Page({
             currentId: res.data[res.data.length - 1].articleid
           })
         }
-        console.log("getOnLineDatasuccess")
+        console.log("getOnLineData1success")
       },
       fail: function (res) {
-        console.log("getOnLineDatafailed")
+        console.log("getOnLineData1failed")
       }
     })
   },
@@ -284,7 +284,7 @@ Page({
     var i = 0
     var j = 0
     wx.request({
-      url: url.urlstr +'showArticlePageServlet',
+      url: url.urlstr +'showArticlePageByLableServlet',
       data: {
         currentId: that.data.currentId,
         lableid:that.data.lableid,
@@ -317,10 +317,10 @@ Page({
           })
         }
         
-        console.log("getOnLineDatasuccess")
+        console.log("getOnLineData2success")
       },
       fail: function (res) {
-        console.log("getOnLineDatafailed")
+        console.log("getOnLineData2failed")
       }
     })
   },
@@ -371,6 +371,9 @@ Page({
   },
   //加载
   nextLoad: function () {
-    this.getOnLineData2();
+    var that = this
+    if (that.data.currentNavtab == 0){
+      this.getOnLineData2();
+    }
   },
 })
