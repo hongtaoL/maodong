@@ -28,11 +28,13 @@ Page({
     commhidden: true,
     tabdisable:true,
     collectionstatus: 'false',
-    admin1:'o2A760PcrLXMg6msbsmB8QvKpxhs',
-    admin2:'o2A760PcrLXMg6msbsmB8QvKpxhs'
-
+    admin1: 'oDfPr0FviysZr4jqtsRn41LTbJmU',
+    admin2: 'oDfPr0OMIfxpwLFJ-e_I8JufLOMY',
+    scrollHeight:'1100rpx',
+    commentAreaHeight:'100rpx',
   },
   onLoad: function (e) {
+    var that = this
     // 页面初始化 e为页面跳转所带来的参数
     this.setData({
       articleid: e.articleid,
@@ -40,6 +42,19 @@ Page({
       userInfo: wx.getStorageSync('userInfo'),
     })
     this.getArticle();
+
+    // 获取系统信息
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res);
+        // 可使用窗口宽度、高度
+        console.log('height=' + res.windowHeight);
+        console.log('width=' + res.windowWidth);
+        that.setData({
+          scrollHeight: res.windowHeight - res.windowWidth / 750 * 100 +'px',
+        })
+      }
+    })
   },
   onReady: function () {
     // 页面渲染完成
@@ -65,10 +80,12 @@ Page({
     if (this.data.inputValue)
       this.setData({
         commhidden: false,
-        tabdisable: false
+        tabdisable: false,
+        commentAreaHeight:'200rpx'
       }); else this.setData({
         commhidden: true,
-        tabdisable: true
+        tabdisable: true,
+      commentAreaHeight: '100rpx'
       })
     } else {
       wx.showModal({
@@ -105,7 +122,7 @@ Page({
     })
     var that = this
     var reply = null;
-     var replyId = -1;
+    var replyId = -1;
     var replycontent = this.data.feed;
     var replycount = this.data.content[0].reply + 1;
 
@@ -161,7 +178,13 @@ Page({
 
     console.log(replycontent);
   },
-
+  //点击回复Ta
+  replyTap:function(e){
+    console.log(e)
+    this.setData({
+      'inputValue': '@'+e.currentTarget.dataset.nickname+' ',
+    })
+  },
   // 清除评论框内容
   clearInputEvent: function (res) {
     this.setData({
@@ -347,6 +370,13 @@ Page({
           }
         })
       }
+    })
+  },
+  //点击头像跳转Ta的页面
+  showTa: function (e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '/pages/Ta/Ta?open_id=' + e.currentTarget.dataset.openid,
     })
   },
   //点赞+按钮

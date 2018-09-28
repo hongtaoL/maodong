@@ -7,7 +7,8 @@
     "pages/typesin/typesin",
     "pages/content/content",
     "pages/subtwitter/subtwitter",
-    "pages/banner/banner"
+    "pages/banner/banner",
+    "pages/Ta/Ta"
   ],
   "window":{
     "backgroundTextStyle":"light",

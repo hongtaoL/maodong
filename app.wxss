@@ -124,6 +124,7 @@
   width: 690rpx;
   padding: 20rpx 0 0;
   color: #a0acac;
+  display: flex;
 }
 
 .container .feed-item .feed-content .content-bottom view {
@@ -139,9 +140,20 @@
 
 .container .feed-item .feed-content .content-bottom .delete {
   margin-left:20rpx;
+  width: 5%;
+}
+.container .feed-item .feed-content .content-bottom .deleteIndex{
+  margin-left:20rpx;
   width: 26%;
 }
-
+.container .feed-item .feed-content .content-bottom .deleteTypes{
+  margin-left:20rpx;
+  width: 25%;
+}
+.container .feed-item .feed-content .content-bottom .deleteMy{
+  margin-left:20rpx;
+  width: 25%;
+}
 .container .feed-item .feed-content .content-bottom .delete a {
   width: 50rpx;
   height: 30rpx;
@@ -158,6 +170,9 @@
 
 .container .feed-item .feed-content .content-bottom .comments {
   width: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container .feed-item .feed-content .content-bottom .comments a {
@@ -175,6 +190,9 @@
 
 .container .feed-item .feed-content .content-bottom .collection {
   width: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container .feed-item .feed-content .content-bottom .collection a {
@@ -189,9 +207,31 @@
   margin-top: -1rpx;
   float: left;
 }
-
+.container .feed-item .feed-content .content-bottom .collection button {
+  width: 30rpx;
+  height: 30rpx;
+  margin: 0;
+  padding: 0;
+  float: left;
+  background-color: #fff;
+  font-size: 12px;
+}
+.container .feed-item .feed-content .content-bottom .collection button::after{
+  border: 0;
+}
+.container .feed-item .feed-content .content-bottom .collection button image{
+  width: 30rpx;
+  height: 30rpx;
+  margin: 0;
+  padding: 0;
+  float: left;
+  border: 0;
+}
 .container .feed-item .feed-content .content-bottom .like {
   width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container .feed-item .feed-content .content-bottom .like image {

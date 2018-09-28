@@ -43,7 +43,7 @@
           <a class="">
 
             <!--以下是头像-->
-            <view class="avatar">
+            <view class="avatar" bindtap="{{item.anonymous=='true'?'':'showTa'}}" data-openid='{{item.userid}}'>
               <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
             </view>
           </a> 
@@ -71,7 +71,7 @@
               <view class="time ">
                 <a>{{item.updatestmp}}更新</a> 
               </view>
-              <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+              <view class="deleteIndex" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
                 <a wx:if="{{item.userid==openId}}">删除</a>
                 <a wx:elif="{{openId==admin1}}">删除</a> 
                 <a wx:elif="{{openId==admin2}}">删除</a>  
@@ -112,7 +112,7 @@
           <a class="">
 
             <!--以下是头像-->
-            <view class="avatar">
+            <view class="avatar" bindtap="{{item.anonymous=='true'?'':'showTa'}}" data-openid='{{item.userid}}'>
               <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
             </view>
           </a> 
@@ -140,7 +140,7 @@
               <view class="time ">
                 <a>{{item.pubdate}}</a> 
               </view>
-              <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+              <view class="deleteIndex" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
                 <a wx:if="{{item.userid==openId}}">删除</a>
                 <a wx:elif="{{openId==admin1}}">删除</a> 
                 <a wx:elif="{{openId==admin2}}">删除</a> 

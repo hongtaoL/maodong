@@ -26,8 +26,6 @@
    bottom:0px; 
    z-index:9999;
   width:750rpx;
-  height:200rpx;
-
 }
 .commentArea .firstLine{
   position:fixed;
@@ -200,7 +198,6 @@ float: right;
 .container .feed-item1 .feed-content .content-bottom .delete {
   width: 40%;
 }
-
 .container .feed-item1 .feed-content .content-bottom .delete a {
   width: 50rpx;
   height: 30rpx;

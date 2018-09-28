@@ -1,11 +1,6 @@
-
-<!--my.wxml-->
+<!--pages/Ta/Ta.wxml-->
 <view class="container">
-  <view wx:if="{{!hasUserInfo && canIUse}}" class="userinfo_top">
-    <button  open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="getUserBtn"> 点击登陆 </button>
-    <text class='tip'>点击才能解锁全部功能哦~</text>
-  </view>
-  <view wx:else class="userinfo">
+  <view class="userinfo">
     <image class="userinfo-avatar" src="{{userInfo.avatar}}" background-size="cover"></image>
     <text class="userinfo-nickname">{{userInfo.nickname}}</text>
   </view>
@@ -19,7 +14,7 @@
   <view class="placehold0" hidden="{{currentNavtab==0 ? '' : true}}">
 
       <!--以下为我的发言内容-->
-      <block wx:for="{{PPA}}" wx:key="{{item.articleid}}" wx:for-item="item" wx:for-index="idxx">
+      <block wx:for="{{PPA}}" wx:key="{{item.articleid}}" wx:for-item="item" wx:for-index="idxx" wx:if="{{item.anonymous=='false'}}">
 
         <!--以下是单个内容格子-->
         <view class="feed-item">
@@ -55,8 +50,8 @@
                 <view class="time ">
                   <a>{{item.pubdate}} </a> 
                 </view>
-                <view class="deleteMy" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
-                  <a wx:if="{{item.userid==openId}}">删除</a> 
+                <view class="deleteMy" data-delete-id="{{item.articleid}}">
+                   
                 </view>
                 <view class="comments " data-articleid="{{item.articleid}}" bindtap="CommentsTap">
                   <image src="../../images/comments.png"></image>
@@ -81,7 +76,6 @@
         <view class="feed-item">
           <view class="feed-source">
             <a class="">
-
               <!--以下是头像-->
               <view class="avatar">
                 <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
@@ -101,8 +95,8 @@
             </view>
             <view class="answer-body">
           
-                <!--以下是内容-->
-                <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
+              <!--以下是内容-->
+              <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
 
               <!--以下是按钮-->
               <view class="content-bottom ">

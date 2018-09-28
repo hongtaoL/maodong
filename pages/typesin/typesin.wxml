@@ -62,7 +62,7 @@
               <view class="time ">
                 <a>{{item.pubdate}} </a> 
               </view>
-              <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+              <view class="deleteTypes" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
                 <a wx:if="{{item.userid==openId}}">删除</a> 
               </view>
               <view class="comments " bindtap="CommentsTap" data-articleid="{{item.articleid}}">
@@ -124,7 +124,7 @@
               <view class="time ">
                 <a>{{item.pubdate}} </a> 
               </view>
-              <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+              <view class="deleteTypes" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
                 <a wx:if="{{item.userid==openId}}">删除</a> 
               </view>
               <view class="comments " bindtap="CommentsTap" data-articleid="{{item.articleid}}">

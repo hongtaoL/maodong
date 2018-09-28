@@ -95,7 +95,12 @@ Page({
     });
     this.refresh();
   },
-
+  showTa:function(e){
+    console.log(e)
+    wx.navigateTo({
+      url: '/pages/Ta/Ta?open_id=' + e.currentTarget.dataset.openid,
+    })
+  },
   // 分享当前页面
   onShareAppMessage: function (res) {
     return {
