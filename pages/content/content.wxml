@@ -39,7 +39,7 @@
             <view class="time ">
               <a>{{item.pubdate}} </a> 
             </view>
-            <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap">
+            <view class="delete" data-delete-id="{{item.articleid}}">
             </view>
             <view class="collection">
               <button open-type='share'>
