@@ -76,7 +76,7 @@
       </view>
 
       <!--以下是内容格子-->
-      <view class="feed-content">
+      <view class="feed-content" bindtap="deleteTap">
         <view class="feed-content-top">
 
           <!--以下的名字-->
@@ -93,7 +93,7 @@
             <view class="time ">
               <a></a> 
             </view>
-            <view class="delete" data-delete-id="{{item.articleid}}" bindtap="deleteTap" style="width:37%;">
+            <view class="delete" data-delete-id="{{item.articleid}}"  style="width:37%;">
               <a wx:if="{{item.userid==openId}}"></a> 
             </view>
             <view class="comments " catchtap="replyTap" wx:if="{{item.anonymous=='false'}}" data-nickname="{{item.nickname}}">
