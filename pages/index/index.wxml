@@ -71,10 +71,10 @@
               <view class="time ">
                 <a>{{item.updatestmp}}更新</a> 
               </view>
-              <view class="deleteIndex" data-delete-id="{{item.articleid}}" >
-                <a wx:if="{{item.userid==openId}}" catchtap="deleteTap">删除</a>
-                <a wx:elif="{{openId==admin1}}" catchtap="deleteTap">删除</a> 
-                <a wx:elif="{{openId==admin2}}" catchtap="deleteTap">删除</a>  
+              <view class="deleteIndex"  >
+                <a wx:if="{{item.userid==openId}}" data-delete-id="{{item.articleid}}" catchtap="deleteTap">删除</a>
+                <a wx:elif="{{openId==admin1}}" data-delete-id="{{item.articleid}}" catchtap="deleteTap">删除</a> 
+                <a wx:elif="{{openId==admin2}}" data-delete-id="{{item.articleid}}" catchtap="deleteTap">删除</a>  
               </view>
               <view class="comments " data-articleid="{{item.articleid}}" bindtap="CommentsTap">
                 <image src="../../images/comments.png"></image>
@@ -140,10 +140,10 @@
               <view class="time ">
                 <a>{{item.pubdate}}</a> 
               </view>
-              <view class="deleteIndex" data-delete-id="{{item.articleid}}">
-                <a wx:if="{{item.userid==openId}}" catchtap="deleteTap">删除</a>
-                <a wx:elif="{{openId==admin1}}" catchtap="deleteTap">删除</a> 
-                <a wx:elif="{{openId==admin2}}" catchtap="deleteTap">删除</a>  
+              <view class="deleteIndex" >
+                <a wx:if="{{item.userid==openId}}" data-delete-id="{{item.articleid}}" catchtap="deleteTap">删除</a>
+                <a wx:elif="{{openId==admin1}}" data-delete-id="{{item.articleid}}" catchtap="deleteTap">删除</a> 
+                <a wx:elif="{{openId==admin2}}" data-delete-id="{{item.articleid}}" catchtap="deleteTap">删除</a>  
               </view>
               <view class="comments " data-articleid="{{item.articleid}}" bindtap="CommentsTap">
                 <image src="../../images/comments.png"></image>

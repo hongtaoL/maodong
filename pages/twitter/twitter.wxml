@@ -6,7 +6,13 @@
 
     <!--文字发布-->
     <view class="fabu">
-      <textarea  name="content" placeholder="{{inputValue}}" maxlength="140" bindblur="textblur" />
+      <textarea  name="content" placeholder="{{inputValue}}" maxlength="140" bindblur="textblur" auto-height='true'/>
+      <view class='imageArea'>
+        <view wx:for="{{imageInfos}}" class='image'>
+          <image  src='{{item.path}}' catchtap='previewImage' data-url="{{item.path}}" style='height:{{item.height}};width:{{item.width}};'></image>
+        </view>
+        <view class='addImg' catchtap='chooseImg' hidden="{{imagesCount==3}}">添加图片</view>
+      </view>
     </view>
 
     <!--匿名发布-->

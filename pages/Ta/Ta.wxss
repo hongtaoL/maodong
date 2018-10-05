@@ -1,11 +1,11 @@
 /* pages/Ta/Ta.wxss */
 .container {
   height: 100%;
-  width: 750rpx;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100rpx 0;
+  padding: 0;
   background-color: EFEFF4;
 } 
 .container .placehold .endtext{
@@ -28,10 +28,12 @@
   margin-top: 20rpx;
 }
 .userinfo {
+  width: 100%;
+  height:300rpx;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
-   margin-top: -100rpx;
 }
 
 .ctnt0 placehold{
@@ -40,18 +42,42 @@
 }
 
 .userinfo-avatar {
-  width: 181rpx;
-  height: 181rpx;
+  width: 170rpx;
+  height: 170rpx;
   border-radius: 50%;
-  margin:20px;
+  margin:10px;
 }
-
+.userinfo-infos{
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10rpx;
+  background-color: aqua;
+}
 .userinfo-nickname {
-  color: #000000;
-  font-size: 22px;
+  width: 100%;
+  height: 100rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10rpx;
 }
-
-.top-tab{
+.hot{
+  height:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hotImage{
+  width: 30rpx;
+  height: 30rpx;
+  background-color: #F5A623;
+}
+.toptab{
   width: 750rpx;
   height: 100rpx;
   color: #000000;
@@ -59,6 +85,8 @@
   line-height: 100rpx;
   z-index: 9999;
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .toptab.active{
@@ -74,10 +102,7 @@
   justify-content: space-around;
   align-items: stretch;
 }
-.flex-item{
-  flex-grow: 1;
-  text-align: center;
-}
+
 .getUserBtnmini{
   
 }

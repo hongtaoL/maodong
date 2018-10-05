@@ -10,13 +10,10 @@
     <!--以下是单个内容格子-->
     <view class="feed-item">
       <view class="feed-source">
-        <a class="">
-
-          <!--以下是头像-->
-          <view class="avatar" catchtap="{{item.anonymous=='true'?'':'showTa'}}" data-openid='{{item.userid}}'>
-           <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
-          </view>
-        </a> 
+        <!--以下是头像-->
+        <view class="avatar" catchtap="{{item.anonymous=='true'?'':'showTa'}}" data-openid='{{item.userid}}'>
+          <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
+        </view>
       </view>
 
       <!--以下是内容格子-->
@@ -66,17 +63,15 @@
     <!--以下是单个内容格子-->
     <view class="feed-item1" catchtap="deleteComment" data-userid="{{item.userid}}" data-replyid="{{idxx}}">
       <view class="feed-source">
-        <a class="">
-
-          <!--以下是头像-->
+        <!--以下是头像-->
           <view class="avatar" catchtap="{{item.anonymous=='true'?'':'showTa'}}" data-openid='{{item.userid}}'>
             <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
           </view>
-        </a> 
+          <view class='floors'>{{item.floor}}楼</view>
       </view>
 
       <!--以下是内容格子-->
-      <view class="feed-content" bindtap="deleteTap">
+      <view class="feed-content" >
         <view class="feed-content-top">
 
           <!--以下的名字-->
@@ -93,10 +88,10 @@
             <view class="time ">
               <a></a> 
             </view>
-            <view class="delete" data-delete-id="{{item.articleid}}"  style="width:37%;">
+            <view class="delete"   style="width:37%;">
               <a wx:if="{{item.userid==openId}}"></a> 
             </view>
-            <view class="comments " catchtap="replyTap" wx:if="{{item.anonymous=='false'}}" data-nickname="{{item.nickname}}">
+            <view class="comments " catchtap="replyTap" data-floor="{{item.floor}}">
               回复Ta
               <a></a> 
             </view>
@@ -115,7 +110,7 @@
 <view class="commentArea" style="height:{{commentAreaHeight}};">
   <form bindsubmit="formSubmit" report-submit="true">
   <view class="firstLine">
-    <input name="input" auto-height="true" placeholder="评论" value="{{inputValue}}" bindinput="textinput" cursor-spacing="50" focus="{{inputValue?true:flase}}"/>
+    <input name="input" auto-height="true" placeholder="评论" value="{{inputValue}}" bindinput="textinput" cursor-spacing="50"/>
     <button size="mini" form-type="submit" disabled="{{tabdisable}}" bindtap="clearInputEvent">发送</button>
   </view>
   <view class="secondLine" hidden="{{commhidden}}">

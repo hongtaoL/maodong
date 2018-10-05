@@ -28,6 +28,7 @@ Page({
     PRC: [],
     PRC_length: 0,
     openId: null,
+    hot:0,
   },
   onLoad: function (option) {
     var that = this
@@ -37,6 +38,7 @@ Page({
     console.log('onLoad')
     that.getUserInfo()
     this.getMyArticleList();
+
   },
   getUserInfo: function () {
     var that = this
@@ -103,8 +105,11 @@ Page({
       //'Content-Type': 'application/json'
       //},
       success: function (res) {
-
+        var hot = 0
         for (i = 0; i < res.data.length; i++) {
+          if (res.data[i].anonymous=='false'){
+            hot = hot + res.data[i].favour + res.data[i].reply
+          }
           for (j = 0; j < res.data[i].favourpeople.length; j++) {
             if (res.data[i].favourpeople[j] == that.data.openId) {
               res.data[i].favourstatus = 'true';
@@ -115,6 +120,7 @@ Page({
         that.setData({
           PPA: res.data,
           PPA_length: res.data.length,
+          hot:hot
         })
         console.log("getOnLineDatasuccess")
       },

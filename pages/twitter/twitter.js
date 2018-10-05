@@ -13,7 +13,11 @@ Page({
     disabled: true,//提交按钮初始不可用
     loading: false,//提交动画
     typeitems: [],
-    userInfo: null
+    userInfo: null,
+    images: ["https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTILgvnWlg7KRRjA3wTiaOcV4ZB1lrrMweic0MSicT2mwTdypvXSWiceTF7HjBGh7a1RaNdbM1PB5hopzQ/132"],
+    imagesCount:0,
+    imageInfos:[],
+    temp:{}
   },
   onLoad: function () {
     this.getLables();
@@ -55,6 +59,50 @@ Page({
       }); else this.setData({
         disabled: true
       })
+  },
+  previewImage:function(e){
+    var that = this
+    console.log(e)
+    wx.previewImage({
+      current:e.currentTarget.dataset.url,
+      urls:that.data.images,
+      success: function(res) {}
+    })
+  },
+  chooseImg:function(){
+    var that = this
+    wx.chooseImage({
+      count: 3,
+      success: function(res) {
+        console.log(res)
+        var images = res.tempFilePaths
+        var temp = {}
+        that.setData({
+          images: images,
+          imagesCount: images.length,
+        })
+        for(var i=0;i<images.length;i++){
+          wx.getImageInfo({
+            src: images[i],
+            success(res) {
+              temp.path = res.path
+              if(res.width<=res.height){
+                temp.width = "200rpx"
+                temp.height = 200 * res.height / res.width + "rpx"
+              }else{
+                temp.height = "200rpx"
+                temp.width = 200 * res.width / res.height + "rpx"
+              }
+              that.setData({
+                temp: temp
+
+              })
+            }
+          })
+          console.log(that.data.imageInfos[i])
+        }
+      },
+    })
   },
   radioChange: function (e) {
     this.setData({

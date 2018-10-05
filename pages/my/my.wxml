@@ -55,8 +55,8 @@
                 <view class="time ">
                   <a>{{item.pubdate}} </a> 
                 </view>
-                <view class="deleteMy" data-delete-id="{{item.articleid}}" >
-                  <a wx:if="{{item.userid==openId}}" catchtap="deleteTap">删除</a> 
+                <view class="deleteMy"  >
+                  <a wx:if="{{item.userid==openId}}" data-delete-id="{{item.articleid}}" catchtap="deleteTap">删除</a> 
                 </view>
                 <view class="comments " data-articleid="{{item.articleid}}" bindtap="CommentsTap">
                   <image src="../../images/comments.png"></image>
@@ -109,8 +109,8 @@
                 <view class="time ">
                   <a>{{item.pubdate}} </a> 
                 </view>
-                <view class="deleteMy" data-delete-id="{{item.articleid}}">
-                  <a wx:if="{{item.userid==openId}}" catchtap="deleteTap">删除</a> 
+                <view class="deleteMy" >
+                  <a wx:if="{{item.userid==openId}}" data-delete-id="{{item.articleid}}" catchtap="deleteTap">删除</a> 
                 </view>
                 <view class="comments " data-articleid="{{item.articleid}}" bindtap="CommentsTap">
                   <image src="../../images/comments.png"></image>

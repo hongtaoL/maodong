@@ -77,12 +77,12 @@ Page({
   onShow: function () {
     var that = this
     //调用应用实例的方法获取全局数据
-    this.refresh();
-    wx.showToast({
-      title: '加载中..',
-      icon: 'loading',
-      duration: 600
-    })
+    // this.refresh();
+    // wx.showToast({
+    //   title: '加载中..',
+    //   icon: 'loading',
+    //   duration: 600
+    // })
     console.log('onshow')
     this.setData({
       openId: wx.getStorageSync('openId')

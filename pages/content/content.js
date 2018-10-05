@@ -123,12 +123,17 @@ Page({
     var that = this
     var reply = null;
     var replyId = -1;
-    var replycontent = this.data.feed;
-    var replycount = this.data.content[0].reply + 1;
-
-
+    var replycontent = that.data.feed;
+    var replycount = that.data.feed.length+1;
+    var floor = 0
+    if (replycount <= 1){
+      floor = 1
+    }else{
+      floor = that.data.feed[replycount - 2].floor + 1
+    }
+    console.log("提交floor="+floor)
     //将内容组成json对象
-    reply = { "anonymous": e.detail.value.switch, "articleid": that.data.articleid, "userid": that.data.openId, "gender": that.data.userInfo.gender, "nickname": that.data.userInfo.nickname, "avatar": that.data.userInfo.avatar, "content": e.detail.value.input, "pubdate": this.getNowFormatDate() };
+    reply = { "anonymous": e.detail.value.switch, "articleid": that.data.articleid, "userid": that.data.openId, "gender": that.data.userInfo.gender, "nickname": that.data.userInfo.nickname, "avatar": that.data.userInfo.avatar, "content": e.detail.value.input, "pubdate": that.getNowFormatDate(), "floor": floor };
     //加到数组中
     replycontent.push(reply);
     console.log(replycount);
@@ -182,7 +187,7 @@ Page({
   replyTap:function(e){
     console.log(e)
     this.setData({
-      'inputValue': '@'+e.currentTarget.dataset.nickname+' ',
+      'inputValue': '@'+e.currentTarget.dataset.floor+'楼  ',
     })
   },
   // 清除评论框内容
@@ -221,7 +226,7 @@ Page({
             //删除要删除的对象
             replycontent.splice(e.currentTarget.dataset.replyid, 1);
             //评论数减一
-            var replycount = that.data.content[0].reply - 1;
+            var replycount = that.data.feed.length;
             //更新本地数据
             that.setData({
               feed:  replycontent
@@ -508,6 +513,7 @@ Page({
             }
           })
         } else {
+          console.log(res.data)
           for (i = 0; i < res.data.length; i++) {
             for (j = 0; j < res.data[i].collection.length; j++) {
               if (res.data[i].collection[j] == that.data.openId) {
@@ -517,12 +523,17 @@ Page({
                 break;
               }
             }
-          }
-          for (i = 0; i < res.data.length; i++) {
             for (j = 0; j < res.data[i].favourpeople.length; j++) {
               if (res.data[i].favourpeople[j] == that.data.openId) {
                 res.data[i].favourstatus = 'true';
                 break;
+              }
+            }
+            for (j = 0; j < res.data[i].rcontent.length; j++){
+              console.log(res.data[i].rcontent[j].floor)
+              if (res.data[i].rcontent[j].floor == 0 || res.data[i].rcontent[j].floor == '0'){
+                res.data[i].rcontent[j].floor = j + 1 
+                console.log(res.data[i].rcontent[j].floor)
               }
             }
           }
