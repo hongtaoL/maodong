@@ -173,6 +173,7 @@ Page({
                           openId: wx.getStorageSync('openId'),
                           hasUserInfo: true
                         })
+                        that.plusTap()
                       } else {//用户id为空，数据库插入操作失败
                         wx.showModal({
                           title: '--提醒--',
@@ -497,6 +498,19 @@ Page({
     var that = this
     if (that.data.currentNavtab == 0){
       this.getOnLineData2();
+    }
+  },
+  // 分享当前页面
+  onShareAppMessage: function (res) {
+    var that = this
+    return {
+      title: '快看！#'+that.data.lablename +'#这个话题又炸了！',
+      success: function (res) {
+        // 转发成功
+      },
+      fail: function (res) {
+        // 转发失败
+      }
     }
   },
 })
