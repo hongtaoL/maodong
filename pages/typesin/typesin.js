@@ -37,6 +37,15 @@ Page({
       lablename:e.typename,
       openId: wx.getStorageSync('openId'),
     })
+    if (wx.getStorageSync('openId') && wx.getStorageSync('userInfo')) {
+      that.setData({
+        openId: wx.getStorageSync('openId'),
+        userInfo: wx.getStorageSync('userInfo'),
+        hasUserInfo: true
+      });
+    } else {
+      that.getUserInfo()
+    }
     // 获取系统信息
     wx.getSystemInfo({
       success: function (res) {
@@ -119,6 +128,85 @@ Page({
         }
       })
     }
+  },
+  //获取用户信息
+  getUserInfo: function () {
+    var that = this
+    if (wx.getStorageSync('openId')){
+      that.plusTap()
+    }else{
+      this.userRegister()
+    }
+  },
+  //用户信息注册
+  userRegister: function () {
+    console.log("my_userRegister")
+    var that = this
+    wx.login({
+      success: res => {
+        that.data.code = res.code
+        //获取失败则调用用户注册
+        wx.getSetting({
+          success: res => {
+            if (res.authSetting['scope.userInfo']) {
+              // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+              wx.getUserInfo({
+                success: res => {
+                  wx.request({
+                    url: url.urlstr + 'registerServlet',
+                    data: {
+                      avatar: res.userInfo.avatarUrl,
+                      code: that.data.code,
+                      nickName: res.userInfo.nickName,
+                      gender: res.userInfo.gender,
+                    },
+                    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+                    // header: {}, // 设置请求的 header
+                    success: function (res) {
+                      // success 保存用户信息
+                      if (res.data.userid) {//运行正常
+                        console.log(res.data.nickname)
+                        wx.setStorageSync('openId', res.data.userid)
+                        wx.setStorageSync('userInfo', res.data)
+                        that.setData({
+                          userInfo: wx.getStorageSync('userInfo'),
+                          openId: wx.getStorageSync('openId'),
+                          hasUserInfo: true
+                        })
+                      } else {//用户id为空，数据库插入操作失败
+                        wx.showModal({
+                          title: '--提醒--',
+                          content: error.errorcode[2].errorname,
+                          success: function (res) {
+                            if (res.confirm) {
+                              console.log(error.errorcode[2].errorid + '用户点击确定')
+                            } else console.log(error.errorcode[2].errorid + '用户点击取消')
+                          }
+                        })
+                      }
+                    },
+                    fail: function (res) {
+                      //连接服务器失败，弹出提示信息
+                      wx.showModal({
+                        title: '--提醒--',
+                        content: error.errorcode[3].errorname,
+                        success: function (res) {
+                          if (res.confirm) {
+                            console.log(error.errorcode[3].errorid + '用户点击确定')
+                          } else console.log(error.errorcode[3].errorid + '用户点击取消')
+                        }
+                      })
+                    }
+                  })
+                }
+              })
+            } else {
+              console.log("没有授权")
+            }
+          }
+        })
+      }
+    })
   },
    //tab切换
   switchTab: function (e) {

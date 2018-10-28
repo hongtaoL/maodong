@@ -49,8 +49,9 @@
 .fabu{
   width:30rpx;
   height:30rpx;
-  margin-left:50rpx;
-  margin-top:40rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .activity{
@@ -69,3 +70,11 @@
     width:750rpx;
     height:220rpx;
 }
+
+.top-tab2 button{
+  border: 1px solid #fff;
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+}
+.top-tab2 button::after{ border: none; }

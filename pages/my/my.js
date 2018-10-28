@@ -76,7 +76,7 @@ Page({
     this.userRegister()
   },
   //用户信息注册
-  userRegister: function (openId) {
+  userRegister: function () {
     console.log("my_userRegister")
     var that = this
     wx.login({

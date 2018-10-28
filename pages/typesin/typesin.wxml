@@ -10,8 +10,10 @@
   </view>
 
   <!--以下为加号发布的内容-->
-  <view class="top-tab2" bindtap="plusTap">
-    <image class="fabu" src="../../images/fabu.png" />
+  <view class="top-tab2">
+    <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+      <image class="fabu" bindtap="plusTap" src="../../images/fabu.png" />
+    </button>
   </view>
 </view>
 
