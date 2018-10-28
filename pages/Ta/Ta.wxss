@@ -71,11 +71,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 16px;
 }
 .hotImage{
   width: 30rpx;
-  height: 30rpx;
-  background-color: #F5A623;
+  height: 40rpx;
+  margin-left: 10rpx;
 }
 .toptab{
   width: 750rpx;

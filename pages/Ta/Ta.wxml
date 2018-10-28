@@ -8,7 +8,7 @@
   </view>
   <view class="top-tab flex-wrp flex-tab">
     <view class="toptab {{currentNavtab==idx ? 'active' : ''}}" wx:for="{{navTab}}" wx:for-index="idx" wx:for-item="itemName" data-idx="{{idx}}" bindtap="switchTab">
-      <text>{{itemName}}</text><view class='hot'>{{hot}}<image class='hotImage'></image></view>
+      <text>{{itemName}}</text><view class='hot'>{{hot}}<image class='hotImage' src='../../images/hot.png'></image></view>
     </view>
   </view>
  <scroll-view scroll-y="true" bindscrolltoupper="upper"  scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
@@ -41,12 +41,19 @@
               <view class="types">{{item.lablename}}</view>
             </view>
             <view class="answer-body">
-              <view >
-
+              <view data-articleid="{{item.articleid}}" bindtap="CommentsTap"  style='padding-bottom:40rpx;'>
                 <!--以下是内容-->
-                <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
+                <text class="answer-txt">{{item.content}}</text>
               </view>
-
+              <view class='articleImageArea' wx:if="{{item.images.length==1}}">
+                <view wx:for="{{item.images}}" class='articleImage1' style='background-image:url({{item}});' catchtap='previewImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+              </view>
+              <view class='articleImageArea' wx:if="{{item.images.length==2}}">
+                <view wx:for="{{item.images}}" class='articleImage2' style='background-image:url({{item}});' catchtap='previewImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+              </view>
+              <view class='articleImageArea' wx:if="{{item.images.length==3}}">
+                <view wx:for="{{item.images}}" class='articleImage3' style='background-image:url({{item}});' catchtap='previewImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+              </view>
               <!--以下是按钮-->
               <view class="content-bottom ">
                 <view class="time ">

@@ -3,12 +3,14 @@
     margin-top: 25rpx;
 }
 .pic{
-    width:600rpx;
+    width:35%;
     height:180rpx;
-    padding:5rpx;
     margin-top: 25rpx;
-    margin-left: 75rpx;
+    margin-left: 10%;
     float:left;
-    border-radius: 15px;
+    border-radius: 10px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 

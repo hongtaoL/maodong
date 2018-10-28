@@ -27,13 +27,28 @@ Page({
     lineSize: 10,
     lineSize1: 100,
     daysbefore: 3,
+    contentHeight:0,
   },
   onLoad: function (e) {
+    var that = this
     this.setData({
       picurl: e.picurl,
       lableid:e.typeid,
       lablename:e.typename,
       openId: wx.getStorageSync('openId'),
+    })
+    // 获取系统信息
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res);
+        // 可使用窗口宽度、高度
+        console.log('height=' + res.windowHeight);
+        console.log('width=' + res.windowWidth);
+        that.setData({
+          // second部分高度 = 利用窗口可使用高度 - first部分高度（这里的高度单位为px）
+          contentHeight: res.windowHeight - res.windowWidth / 750 * 100
+        })
+      }
     })
      wx.showToast({
       title: '加载中..',
@@ -49,12 +64,12 @@ Page({
   onShow: function () {
     var that = this
     //调用应用实例的方法获取全局数据
-    this.refresh();
-    wx.showToast({
-      title: '加载中..',
-      icon: 'loading',
-      duration: 300
-    })
+    //this.refresh();
+    // wx.showToast({
+    //   title: '加载中..',
+    //   icon: 'loading',
+    //   duration: 300
+    // })
     this.setData({
       openId: wx.getStorageSync('openId')
     });
@@ -64,6 +79,26 @@ Page({
   },
   onUnload: function () {
     // 页面关闭
+  },
+  //预览图片
+  previewTimeImage: function (e) {
+    var that = this
+    console.log(e)
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: that.data.feed[e.currentTarget.dataset.index].images,
+      success: function (res) { }
+    })
+  },
+  //预览图片
+  previewHotImage: function (e) {
+    var that = this
+    console.log(e)
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: that.data.feed1[e.currentTarget.dataset.index].images,
+      success: function (res) { }
+    })
   },
     //发布按钮
   plusTap: function () {
@@ -324,7 +359,7 @@ Page({
       }
     })
   },
-    //使用网络请求数据, 实现首页按热度刷新(currentId==0)
+    //使用网络请求数据, 实现首页按热度刷新
   getOnLineData3: function () {
     var that = this
     var i = 0

@@ -99,6 +99,7 @@ float: right;
 .floors{
   font-size: 12px;
   padding-left:5px;
+ color: #5b5b5b;
 }
 .container .feed-item1 .feed-source .avatar {
   position: relative;

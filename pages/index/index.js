@@ -88,6 +88,26 @@ Page({
       openId: wx.getStorageSync('openId')
     });
   },
+  //预览图片
+  previewTimeImage: function (e) {
+    var that = this
+    console.log(e)
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: that.data.feed[e.currentTarget.dataset.index].images,
+      success: function (res) { }
+    })
+  },
+  //预览图片
+  previewHotImage: function (e) {
+    var that = this
+    console.log(e)
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: that.data.feed1[e.currentTarget.dataset.index].images,
+      success: function (res) { }
+    })
+  },
   //tab切换
   switchTab: function (e) {
     this.setData({
@@ -252,7 +272,7 @@ Page({
           wx.request({
             url: url.urlstr +'removeArticleServlet',
             data: {
-              articleid: event.currentTarget.dataset.deleteId
+              articleid: event.currentTarget.dataset.deleteId,
             },
             //header: {
             //'Content-Type': 'application/json'

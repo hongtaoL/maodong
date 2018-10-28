@@ -67,15 +67,25 @@ Page({
       })
     }
   },
-  onShow: function () {
+  //预览我的发言图片
+  previewImage: function (e) {
     var that = this
-    if (that.data.currentNavtab == '0') {
-      that.getMyArticleList();
-    } else if (that.data.currentNavtab == '1') {
-      that.getCollectionList();
-    } else {
-      that.getRecommendList();
-    }
+    console.log(e)
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: that.data.PPA[e.currentTarget.dataset.index].images,
+      success: function (res) { }
+    })
+  },
+  onShow: function () {
+    // var that = this
+    // if (that.data.currentNavtab == '0') {
+    //   that.getMyArticleList();
+    // } else if (that.data.currentNavtab == '1') {
+    //   that.getCollectionList();
+    // } else {
+    //   that.getRecommendList();
+    // }
   },
   //标签切换
   switchTab: function (e) {

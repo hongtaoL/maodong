@@ -18,6 +18,9 @@ Page({
       '../../images/star_empty.png',
       '../../images/star_full.png'
     ],
+    anonymous:false,
+    showAnonymous: 0,
+    typeitems: [],
     articleid: null,
     feed: [],
     feed_length: 2,
@@ -70,6 +73,33 @@ Page({
   },
   onUnload: function () {
     // 页面关闭
+  },
+  //获取类别
+  getLables: function () {
+    var that = this
+    wx.request({
+      url: url.urlstr + 'showLablesServlet',
+      success: function (res) {
+        that.setData({
+          typeitems: res.data,
+          showAnonymous: res.data[that.data.content[0].lableid-1].canAnonymous
+        })
+        console.log("getOnLineDatasuccess")
+      },
+      fail: function (res) {
+        console.log("getOnLineDatafailed")
+      }
+    })
+  },
+  //预览图片
+  previewImage: function (e) {
+    var that = this
+    console.log(e)
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: that.data.content[e.currentTarget.dataset.index].images,
+      success: function (res) { }
+    })
   },
   //评论输入框开始输入
   textinput: function (e) {
@@ -133,7 +163,7 @@ Page({
     }
     console.log("提交floor="+floor)
     //将内容组成json对象
-    reply = { "anonymous": e.detail.value.switch, "articleid": that.data.articleid, "userid": that.data.openId, "gender": that.data.userInfo.gender, "nickname": that.data.userInfo.nickname, "avatar": that.data.userInfo.avatar, "content": e.detail.value.input, "pubdate": that.getNowFormatDate(), "floor": floor };
+    reply = { "anonymous": that.data.anonymous, "articleid": that.data.articleid, "userid": that.data.openId, "gender": that.data.userInfo.gender, "nickname": that.data.userInfo.nickname, "avatar": that.data.userInfo.avatar, "content": e.detail.value.input, "pubdate": that.getNowFormatDate(), "floor": floor };
     //加到数组中
     replycontent.push(reply);
     console.log(replycount);
@@ -182,6 +212,13 @@ Page({
     })
 
     console.log(replycontent);
+  },
+  //是否匿名
+  switchChange: function (e) {
+    console.log(e)
+    this.setData({
+      anonymous: e.detail.value
+    })
   },
   //点击回复Ta
   replyTap:function(e){
@@ -541,6 +578,7 @@ Page({
             feed: res.data[0].rcontent,
             content: res.data
           })
+          that.getLables();
         }
         console.log("getArticlesuccess")
       },

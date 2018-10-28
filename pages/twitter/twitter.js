@@ -7,17 +7,20 @@ var url = data_index.index;
 Page({
   data: {
     focus: false,
-    inputValue: '写下此刻的想法...',//textarea的值
+    inputValue: null,//textarea的值
+    anonymous:false,
+    showAnonymous:0,
     types: ['default', 'primary', 'warn'],
     radioValue: '',//分类标签的值
     disabled: true,//提交按钮初始不可用
     loading: false,//提交动画
     typeitems: [],
     userInfo: null,
-    images: ["https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTILgvnWlg7KRRjA3wTiaOcV4ZB1lrrMweic0MSicT2mwTdypvXSWiceTF7HjBGh7a1RaNdbM1PB5hopzQ/132"],
+    images: [],
     imagesCount:0,
     imageInfos:[],
-    temp:{}
+    temp:{},
+    keys:[]
   },
   onLoad: function () {
     this.getLables();
@@ -49,6 +52,14 @@ Page({
       })
     }
   },
+  //是否匿名
+  switchChange:function(e){
+    console.log(e)
+    this.setData({
+      anonymous:e.detail.value
+    })
+  },
+  //输入框失去焦点
   textblur: function (e) {
     this.setData({
       inputValue: e.detail.value
@@ -60,6 +71,7 @@ Page({
         disabled: true
       })
   },
+  //预览图片
   previewImage:function(e){
     var that = this
     console.log(e)
@@ -69,51 +81,87 @@ Page({
       success: function(res) {}
     })
   },
+  //选择图片
   chooseImg:function(){
     var that = this
     wx.chooseImage({
       count: 3,
+      sizeType: ['compressed'],
       success: function(res) {
         console.log(res)
         var images = res.tempFilePaths
-        var temp = {}
         that.setData({
           images: images,
-          imagesCount: images.length,
+          imagesCount: images.length
         })
-        for(var i=0;i<images.length;i++){
-          wx.getImageInfo({
-            src: images[i],
-            success(res) {
-              temp.path = res.path
-              if(res.width<=res.height){
-                temp.width = "200rpx"
-                temp.height = 200 * res.height / res.width + "rpx"
-              }else{
-                temp.height = "200rpx"
-                temp.width = 200 * res.width / res.height + "rpx"
-              }
-              that.setData({
-                temp: temp
-
-              })
-            }
-          })
-          console.log(that.data.imageInfos[i])
-        }
+        var length = that.data.images.length
+        that.getImageInfo(0,length)
       },
     })
   },
-  radioChange: function (e) {
-    this.setData({
-      radioValue: e.detail.value
+  //删除图片
+  imgDel:function(res){
+    var that = this
+    console.log(res)
+    var index = res.currentTarget.dataset.index
+    that.data.images.splice(index, 1);
+    that.data.imageInfos.splice(index, 1);
+    that.setData({
+      images: that.data.images,
+      imagesCount: that.data.images.length,
+      imageInfos: that.data.imageInfos
+    })
+  },
+  //获取图片信息
+  getImageInfo:function(i,l){
+    var that = this
+    wx.getImageInfo({
+      src: that.data.images[i],
+      success: function (res,index=i,length=l) {
+        console.log("index"+index)
+        var t = {}
+        t.path = res.path
+        if (res.width <= res.height) {
+          t.width = "200rpx"
+          t.height = 200 * res.height / res.width + "rpx"
+        } else {
+          t.height = "200rpx"
+          t.width = 200 * res.width / res.height + "rpx"
+        }
+        that.setData({
+          temp: t
+        })
+        var info = "imageInfos[" + i + "]"
+        console.log(info)
+        console.log(that.data.temp)
+        that.setData({
+          [info]: that.data.temp
+        })
+        console.log(that.data.imageInfos[i])
+        index++
+        if (index < length) {
+          that.getImageInfo(index, length)
+        }
+      }
+    })
+  },
+  typeTab: function (e) {
+    console.log(e)
+    var that = this
+    that.setData({
+      showAnonymous: that.data.typeitems[e.currentTarget.dataset.index].canAnonymous,
+      radioValue: e.currentTarget.dataset.lableid,
+      anonymous:false
     });
-    if (this.data.inputValue && e.detail.value)
-      this.setData({
+    if (that.data.inputValue && that.data.radioValue){
+      that.setData({
         disabled: false
-      }); else this.setData({
+      })
+    }else {
+      that.setData({
         disabled: true
       })
+    }
   },
   //获取类别
   getLables: function () {
@@ -131,17 +179,82 @@ Page({
       }
     })
   },
-  formSubmit: function (e) {
+  //上传图片
+  uploadOneByOne(imgPaths, successUp, failUp, count, length,userid) {
+    var that = this;
+    wx.showLoading({
+      title: '正在上传第' + count + '张',
+    })
+    wx.uploadFile({
+      url: url.urlstr + 'uploadImagesServlet',
+      filePath: imgPaths[count],
+      name: 'image',//示例，使用顺序给文件命名
+      header: {
+        "Content-Type": "multipart/form-data"
+      },
+      formData: {
+        'userid': userid
+      },
+      success: function (e) {
+        console.log(e)
+        that.data.keys[successUp] = e.data
+        successUp++;//成功+1
+        console.log('上传成功')
+      },
+      fail: function (e) {
+        failUp++;//失败+1
+        console.log('上传失败')
+        console.log(e)
+      },
+      complete: function (e) {
+        count++;//下一张
+        if (count == length) {
+          //上传完毕，作一下提示
+          console.log('上传成功' + successUp + ',' + '失败' + failUp);
+          wx.showToast({
+            title: '上传成功' + successUp,
+            icon: 'success',
+            duration: 2000
+          })
+          that.formSubmit()
+        } else {
+          //递归调用，上传下一张
+          that.uploadOneByOne(imgPaths, successUp, failUp, count, length, userid);
+          console.log('正在上传第' + count + '张');
+        }
+      }
+    })
+  },
+  //点击上传
+  uploadImg:function(){
+    var that = this
+    var imgPaths = that.data.images
+    var count = 0
+    var successUp = 0
+    var failUp = 0
+    var length = that.data.images.length
+    if (wx.getStorageSync('openId')){
+      var userid = wx.getStorageSync('openId')
+      if(count<length){
+        that.uploadOneByOne(imgPaths, successUp, failUp, count, length, userid) 
+      }else{
+        that.formSubmit()
+      }
+    }
+  },
+  //提交内容
+  formSubmit: function () {
     var that = this
     //获取用户信息，成功则发送连接请求
     if (wx.getStorageSync('openId')) {
       wx.request({
         url: url.urlstr +'addArticleServlet',
         data: {
-          anonymous: e.detail.value.anonymous,
-          content: e.detail.value.content,
+          anonymous: that.data.anonymous,
+          content: that.data.inputValue,
           userid: wx.getStorageSync('openId'),
-          lableid: e.detail.value.lableid
+          lableid: that.data.radioValue,
+          images:that.data.keys
         },
         method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
         header: {}, // 设置请求的 header

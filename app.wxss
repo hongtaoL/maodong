@@ -118,8 +118,40 @@
 .container .feed-item .feed-content .answer-body text  {
    word-break: break-all;
 }
+.articleImageArea{
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  margin-bottom: 20rpx;
 
+}
+.articleImageArea .articleImage1{
+  width: 100%;
+  height: 350rpx;
+  background-repeat: no-repeat;
+  background-position:left center;
+  background-size: contain;
 
+}
+.articleImageArea .articleImage2{
+  width: 200rpx;
+  height: 200rpx;
+  margin-right: 10rpx;
+  background-repeat: no-repeat;
+  background-position:center center;
+  background-size:cover;
+  background-color: #eee;
+}
+.articleImageArea .articleImage3{
+  width: 200rpx;
+  height: 200rpx;
+  margin-right: 10rpx;
+  background-repeat: no-repeat;
+  background-position:center center;
+  background-size:cover;
+  background-color: #eee;
+}
 .container .feed-item .feed-content .content-bottom {
   width: 690rpx;
   padding: 20rpx 0 0;

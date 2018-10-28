@@ -41,7 +41,36 @@ Page({
     }else{
       that.getUserInfo()
     }
-    this.getMyArticleList();
+    this.setData({
+      openId: wx.getStorageSync('openId')
+    });
+    if (that.data.currentNavtab == '0') {
+      that.getMyArticleList();
+    } else if (that.data.currentNavtab == '1') {
+      that.getCollectionList();
+    } else {
+      that.getRecommendList();
+    }
+  },
+  //预览我的发言图片
+  previewMyImage: function (e) {
+    var that = this
+    console.log(e)
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: that.data.PPA[e.currentTarget.dataset.index].images,
+      success: function (res) { }
+    })
+  },
+  //预览我的收藏图片
+  previewCollectionImage: function (e) {
+    var that = this
+    console.log(e)
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: that.data.MYC[e.currentTarget.dataset.index].images,
+      success: function (res) { }
+    })
   },
   getUserInfo: function () {
     this.userRegister()
@@ -118,16 +147,7 @@ Page({
   },
   onShow: function () {
     var that = this
-    this.setData({
-      openId: wx.getStorageSync('openId')
-    });
-    if (that.data.currentNavtab == '0') {
-      that.getMyArticleList();
-    } else if (that.data.currentNavtab == '1') {
-      that.getCollectionList();
-    } else {
-      that.getRecommendList();
-    }
+    
   },
   //标签切换
   switchTab: function (e) {

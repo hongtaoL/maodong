@@ -44,12 +44,19 @@
               <view class="types">{{item.lablename}}</view>
             </view>
             <view class="answer-body">
-              <view >
-
+              <view data-articleid="{{item.articleid}}" bindtap="CommentsTap"  style='padding-bottom:40rpx;'>
                 <!--以下是内容-->
-                <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
+                <text class="answer-txt">{{item.content}}</text>
               </view>
-
+              <view class='articleImageArea' wx:if="{{item.images.length==1}}">
+                <view wx:for="{{item.images}}" class='articleImage1' style='background-image:url({{item}});' catchtap='previewMyImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+              </view>
+              <view class='articleImageArea' wx:if="{{item.images.length==2}}">
+                <view wx:for="{{item.images}}" class='articleImage2' style='background-image:url({{item}});' catchtap='previewMyImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+              </view>
+              <view class='articleImageArea' wx:if="{{item.images.length==3}}">
+                <view wx:for="{{item.images}}" class='articleImage3' style='background-image:url({{item}});' catchtap='previewMyImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+              </view>
               <!--以下是按钮-->
               <view class="content-bottom ">
                 <view class="time ">
@@ -100,10 +107,19 @@
               <view class="types">{{item.lablename}}</view>
             </view>
             <view class="answer-body">
-          
+              <view data-articleid="{{item.articleid}}" bindtap="CommentsTap"  style='padding-bottom:40rpx;'>
                 <!--以下是内容-->
-                <text class="answer-txt" data-articleid="{{item.articleid}}" bindtap="CommentsTap">{{item.content}}</text>
-
+                <text class="answer-txt">{{item.content}}</text>
+              </view>
+              <view class='articleImageArea' wx:if="{{item.images.length==1}}">
+                <view wx:for="{{item.images}}" class='articleImage1' style='background-image:url({{item}});' catchtap='previewCollectionImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+              </view>
+              <view class='articleImageArea' wx:if="{{item.images.length==2}}">
+                <view wx:for="{{item.images}}" class='articleImage2' style='background-image:url({{item}});' catchtap='previewCollectionImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+              </view>
+              <view class='articleImageArea' wx:if="{{item.images.length==3}}">
+                <view wx:for="{{item.images}}" class='articleImage3' style='background-image:url({{item}});' catchtap='previewCollectionImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+              </view>
               <!--以下是按钮-->
               <view class="content-bottom ">
                 <view class="time ">

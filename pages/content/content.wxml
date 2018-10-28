@@ -30,7 +30,15 @@
          
             <!--以下是内容-->
             <text class="answer-txt" aid="{{answer_id}}">{{item.content}}</text>
-
+            <view class='articleImageArea' wx:if="{{item.images.length==1}}">
+              <view wx:for="{{item.images}}" class='articleImage1' style='background-image:url({{item}});' catchtap='previewImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+            </view>
+            <view class='articleImageArea' wx:if="{{item.images.length==2}}">
+              <view wx:for="{{item.images}}" class='articleImage2' style='background-image:url({{item}});' catchtap='previewImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+            </view>
+            <view class='articleImageArea' wx:if="{{item.images.length==3}}">
+              <view wx:for="{{item.images}}" class='articleImage3' style='background-image:url({{item}});' catchtap='previewImage' data-index="{{idxx}}" data-url="{{item}}"></view>
+            </view>
           <!--以下是按钮-->
           <view class="content-bottom ">
             <view class="time ">
@@ -67,7 +75,8 @@
           <view class="avatar" catchtap="{{item.anonymous=='true'?'':'showTa'}}" data-openid='{{item.userid}}'>
             <image src="{{item.anonymous=='true'?(item.gender==1?avatarImg[1]:avatarImg[0]):item.avatar}}"></image>
           </view>
-          <view class='floors'>{{item.floor}}楼</view>
+          <view class='floors' wx:if="{{item.userid==content[0].userid}}">楼主</view>
+          <view class='floors' wx:else>{{item.floor}}楼</view>
       </view>
 
       <!--以下是内容格子-->
@@ -113,9 +122,9 @@
     <input name="input" auto-height="true" placeholder="评论" value="{{inputValue}}" bindinput="textinput" cursor-spacing="50"/>
     <button size="mini" form-type="submit" disabled="{{tabdisable}}" bindtap="clearInputEvent">发送</button>
   </view>
-  <view class="secondLine" hidden="{{commhidden}}">
+  <view class="secondLine" hidden="{{commhidden}}" wx:if="{{showAnonymous=='1'}}">
     <view class="niming" >匿名发布</view>
-    <switch name="switch" color="#F5A623"/>
+    <switch name="switch" color="#F5A623" bindchange="switchChange" checked="{{anonymous}}"/>
   </view>
   </form>
   </view>

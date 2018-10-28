@@ -1,36 +1,43 @@
 
 <!--twitter.wxml-->
+<scroll-view>
 <view class="container">
-  <form class="form" bindsubmit="formSubmit">
-
+  <form class="form" >
     <!--文字发布-->
     <view class="fabu">
-      <textarea name="content" placeholder="{{inputValue}}" maxlength="140" bindblur="textblur" />
+      <textarea  name="content" placeholder="爱猫洞，爱生活" maxlength="140" bindblur="textblur" auto-height='true'/>
+      <view class='imageArea'>
+        <view wx:for="{{imageInfos}}" wx:for-index="idx" class='image'>
+          <image class='ImgDel' src='../../images/delete.png' catchtap='imgDel' data-index="{{idx}}"></image>
+          <image  src='{{item.path}}' catchtap='previewImage' data-url="{{item.path}}" style='height:{{item.height}};width:{{item.width}};'></image>
+        </view>
+        <view class='addImg' catchtap='chooseImg' wx:if="{{imagesCount!=3}}">
+          <image src='../../images/addImage.png'></image>
+        </view>
+      </view>
     </view>
 
     <!--匿名发布-->
-    <view class="niming ">
+    <view class="niming " wx:if="{{showAnonymous=='1'}}">
       <view class="wenzi">
         <text>匿名发布</text>
       </view>
       <view class="switch">
-        <switch class="switchbutton" name="anonymous" color="#F5A623" />
+        <switch class="switchbutton" name="anonymous"  color="#F5A623" bindchange="switchChange"/>
       </view>
     </view>
 
-    <!--选择标签-->
-    <!-- <view class="type">
-        <radio-group bindchange="radioChange" name="lableid">
-          <view> 
-              <radio wx:for="{{items}}" value="{{item.value}}" color="#F5A623" >{{item.name}}</radio>
+    <!-- 选择标签
+    <view class="type">
+          <view class="abc" > 
+              <button wx:for="{{typeitems}}" style="{{item.lableid==radioValue?'background-color: #F5A623;':''}}" bindtap='typeTab' data-index="{{item.lableid}}">{{item.lablename}}</button>
           </view>
-        </radio-group>
-    </view>
--->
+    </view> -->
 
     <!--提交-->
     <view class="subbutton">
-      <button class="btn" size="default" type="{{types[1]}}" disabled="{{disabled}}" form-type="submit" bindtap="setLaoding" hover-class="button-hover"> 提交 </button>
+      <button class="btn"  size="default" type="{{types[1]}}" bindtap='uploadImg' disabled="{{disabled}}" hover-class="button-hover">提交</button>
     </view>
   </form>
 </view>
+</scroll-view>
