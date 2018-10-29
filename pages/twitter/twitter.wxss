@@ -114,18 +114,18 @@
   float: left;
 }
 .container .type button{
-  width: 100rpx;
+  min-width: 100rpx;
   height: 60rpx;
   font-size: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
   float: left;
-  padding:0;
+  padding:0 10px;
   margin: 2px;
 }
 .container .type button text{
-  width: 90%;
+  /* width: 90%; */
   height: 90%;
 }
 .container .subbutton {
